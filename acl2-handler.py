@@ -39,6 +39,15 @@ class ACL2Handler(BaseHTTPServer.BaseHTTPRequestHandler):
     elif self.path == '/jquery.console.js':
       self.file_handle('jquery.console.js')
       return
+    elif self.path == '/script.js':
+      self.file_handle('script.js')
+      return
+    elif self.path == '/style.css':
+      self.file_handle('style.css')
+      return
+    elif self.path == '/throbber.gif':
+      self.file_handle('throbber.gif')
+      return
     params_path = self.path.split('?')
     if len(params_path) == 1:
       self.send_error(500, 'Missing required "code" parameter')
