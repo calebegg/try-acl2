@@ -16,8 +16,7 @@
   }
   var consoleCancelFlag = false;
   $(document).ready(function(){
-      jq_console = $('<div class="console">');
-      $('body').append(jq_console);
+      jq_console = $('#console');
       controller = jq_console.console({
        autofocus: true,
        promptLabel: '> ',
@@ -56,44 +55,88 @@
    });
 </script>
 <style type="text/css" media="screen">
-  body, html {
+  #console ::-webkit-scrollbar {
+    width: 10px;
+  }
+  #console ::-webkit-scrollbar-track {
+    background: #eee;
+  }
+  #console ::-webkit-scrollbar-thumb {
+    background: #94C740;
+  }
+  html {
     background: #eee;
     height: 100%;
+    width: 100%;
     padding: 0;
     margin: 0;
     font-family: monospace;
   }
-  div.console {
-    font-size: 14px;
-    height: 100%;
-    width: 80em;
-    background: white;
+  body {
+    border-radius: 3px;
+    font-size: 10pt;
+    height: 99%;
+    background: #94C740;
+    width: 600px;
+    margin: 4px auto;
+    -webkit-box-shadow: 0 0 5px #888;
+    -moz-box-shadow: 0 0 5px #888;
+    box-shadow: 0 0 8px #888;
   }
-  div.console div.jquery-console-inner {
+  #console {
+    background: white;
+    border-width: 1px 0;
+    border: solid #888 1px;
+    height: 50%;
+    padding: 6px;
+  }
+  h1 {
+    margin: 0;
+    padding: 4px 0 2px 4px;
+    color: #335;
+  }
+  #console .jquery-console-inner {
     height: 100%;
     overflow: auto;
   }
-  div.console div.jquery-console-prompt-box {
+  #console .jquery-console-prompt-box {
     color: #444;
   }
-  div.console div.jquery-console-focus span.jquery-console-cursor {
+  #console .jquery-console-focus span.jquery-console-cursor {
     background: #333;
     color: #eee;
     font-weight: bold
   }
-  div.console div.error {
+  #console .error {
     color: #ef0505;
     font-weight: bold;
     padding: 0.1em;
   }
-  div.console div.jquery-console-message {
+  #console .jquery-console-message {
     max-height: 200px;
     overflow: auto;
     margin: 5px 20px;
     white-space: pre;
     white-space: pre-wrap;
+    word-wrap: break-word;
   }
-  div.console span.jquery-console-prompt-label {
+  #console span.jquery-console-prompt-label {
     font-weight: bold;
   }
+  #help {
+    padding: 10px
+  }
 </style>
+<h1>Try ACL2</h1>
+<div id="console"></div>
+<div id="help">
+  Some things to try:
+  <ul>
+    <li> (+ 1 1)
+    <li> (append '(1 2 3) '(4 5 6))
+    <li> (thm (= (+ a b) (+ b a)))
+    <li> (defun fact (n) (if (zp n) 1 (* n (fact (- n 1)))))
+    <li> (defun sum (xs) (if (endp xs) 0 (+ (first xs) (sum (rest xs)))))
+    <li> (thm (= (sum (append xs ys)) (+ (sum xs) (sum ys))))
+  </ul>
+</div>
