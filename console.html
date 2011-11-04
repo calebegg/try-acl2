@@ -1,59 +1,12 @@
 <!doctype html>
 <meta name="Content-Type" content="text/html; charset=UTF-8">
 <title>Try ACL2</title>
-<script type="text/javascript"
-  src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js">
 </script>
+<link href="http://fonts.googleapis.com/css?family=Droid+Sans+Mono"
+      rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.console.js"></script>
-<script type="text/javascript">
-  sid = Math.random()
-  function parens_match(line) {
-    opens = line.match(/\(/g);
-    open_cnt = (opens ? opens.length : 0);
-    closes = line.match(/\)/g);
-    close_cnt = (closes ? closes.length : 0);
-    return open_cnt - close_cnt;
-  }
-  var consoleCancelFlag = false;
-  $(document).ready(function(){
-      jq_console = $('#console');
-      controller = jq_console.console({
-       autofocus: true,
-       promptLabel: '> ',
-       commandValidate:function(line){
-         if (line == "") return false;
-         else return true;
-       },
-       commandHandle: function(line, report) {
-        paren_count = parens_match(line);
-        if (paren_count > 0) {
-          controller.continuedPrompt = true;
-          return;
-        } else if (paren_count < 0) {
-          report([{msg:"Unmatched ')'", className:"error"}]);
-          return;
-        }
-        controller.continuedPrompt = false;
-        $.get('', {code: line, sid: sid}, function(data) {
-            if(!consoleCancelFlag)
-              report(data);
-            else {
-              report([{msg:"User interrupt",
-                className:"error"}]);
-                consoleCancelFlag = false;
-            }
-            inner = $('.jquery-console-inner')[0]
-            inner.scrollTop = inner.scrollHeight;
-        });
-       },
-       cancelHandle:function() {
-           consoleCancelFlag = true;
-       },
-       animateScroll:true,
-       promptHistory:true
-     });
-   });
-</script>
+<script src="script.js"> </script>
 <style type="text/css" media="screen">
   #console ::-webkit-scrollbar {
     width: 10px;
@@ -70,30 +23,49 @@
     width: 100%;
     padding: 0;
     margin: 0;
-    font-family: monospace;
+    font-family: sans-serif;
+  }
+  code, #console {
+    font-size: smaller;
+    font-family: "Droid Sans Mono", monospace;
+  }
+  code {
+    cursor: pointer;
+  }
+  body, #help, #console {
+    border-radius: 3px;
   }
   body {
-    border-radius: 3px;
-    font-size: 10pt;
-    height: 99%;
+    position: relative;
+    font-size: 12pt;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
     background: #94C740;
-    width: 600px;
+    width: 700px;
     margin: 4px auto;
     -webkit-box-shadow: 0 0 5px #888;
     -moz-box-shadow: 0 0 5px #888;
     box-shadow: 0 0 8px #888;
+    padding-bottom: 18px; /* footer */
+    color: #050;
   }
-  #console {
-    background: white;
-    border-width: 1px 0;
-    border: solid #888 1px;
-    height: 50%;
-    padding: 6px;
+  a:link {
+    color: inherit;
   }
   h1 {
     margin: 0;
     padding: 4px 0 2px 4px;
-    color: #335;
+    color: #030;
+    text-align: center;
+  }
+  #console {
+    position: relative;
+    background: rgba(255,255,255,.9);
+    border-width: 1px 0;
+    border: solid #888 1px;
+    height: 400px;
+    padding: 6px;
   }
   #console .jquery-console-inner {
     height: 100%;
@@ -112,7 +84,7 @@
     font-weight: bold;
     padding: 0.1em;
   }
-  #console .jquery-console-message {
+  .jquery-console-message {
     max-height: 200px;
     overflow: auto;
     margin: 5px 20px;
@@ -124,19 +96,55 @@
     font-weight: bold;
   }
   #help {
-    padding: 10px
+    margin: 5px;
+    padding: 5px;
+    background: rgba(255, 255, 255, .5);
+  }
+  footer {
+    position: absolute;
+    width: 100%;
+    bottom: 8px;
+    height: 12px;
+    text-align: center;
+  }
+  #throbber {
+    display: none;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+  }
+  .collapse {
+    cursor: pointer;
+  }
+  .success {
+    color: #090;
   }
 </style>
 <h1>Try ACL2</h1>
-<div id="console"></div>
+<div id="console">
+  <div id="throbber"><img src="throbber.gif" /></div>
+</div>
 <div id="help">
-  Some things to try:
+  <p>
+  ACL2 is:
   <ul>
-    <li> (+ 1 1)
-    <li> (append '(1 2 3) '(4 5 6))
-    <li> (thm (= (+ a b) (+ b a)))
-    <li> (defun fact (n) (if (zp n) 1 (* n (fact (- n 1)))))
-    <li> (defun sum (xs) (if (endp xs) 0 (+ (first xs) (sum (rest xs)))))
-    <li> (thm (= (sum (append xs ys)) (+ (sum xs) (sum ys))))
+    <li> A Compuational Logic: A complex mechanized theorem prover that can
+         reason about code written in...
+    <li> Applicitave Common Lisp: A significantly restricted subset of Common
+         Lisp that doesn't allow for variables to be modified in place.
+  </ul>
+  <p>
+  Some things to try (click to insert):
+  <ul>
+    <li><code>(+ 1 1)</code>
+    <li><code>(append '(1 2 3) '(4 5 6))</code>
+    <li><code>(thm (= (+ a b) (+ b a)))</code>
+    <li><code>(defun fact (n) (if (zp n) 1 (* n (fact (- n 1)))))</code>
+    <li><code>(defun sum (xs) (if (endp xs) 0 (+ (first xs) (sum (rest
+              xs)))))</code>
+    <li><code>(thm (= (sum (append xs ys)) (+ (sum xs) (sum ys))))</code>
   </ul>
 </div>
+<footer>
+<a href="mailto:calebegg@gmail.com">Feedback</a> | <a href="http://github.com/calebegg/try-acl2/issues">Report a bug</a>
+</footer>
