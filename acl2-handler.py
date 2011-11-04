@@ -1,13 +1,28 @@
 #!/usr/bin/python
 
 import BaseHTTPServer
+from threading import Timer, Semaphore, Lock
 from subprocess import Popen, PIPE
 from urllib import unquote
 
 import acl2
 
+INITIAL_ACL2_COUNT = 10
+
 a = {}
-aq = [acl2.ACL2() for i in range(5)]
+acl2_queue = [acl2.ACL2() for i in range(INITIAL_ACL2_COUNT)]
+acl2_queue_semaphore = Semaphore(INITIAL_ACL2_COUNT)
+acl2_queue_lock = Lock()
+
+def create_new_acl2():
+  print 'creating new acl2'
+  acl2_queue_lock.acquire()
+  print 'got lock'
+  acl2_queue.append(acl2.ACL2())
+  print 'done creating'
+  acl2_queue_semaphore.release()
+  acl2_queue_lock.release()
+  print 'done'
 
 class ACL2Handler(BaseHTTPServer.BaseHTTPRequestHandler):
   def file_handle(self, fn):
@@ -32,9 +47,12 @@ class ACL2Handler(BaseHTTPServer.BaseHTTPRequestHandler):
     code = params['code']
     sid = params.get('sid', 0)
     if not sid in a:
-      a[sid] = aq.pop()
+      acl2_queue_semaphore.acquire()
+      acl2_queue_lock.acquire()
+      a[sid] = acl2_queue.pop()
+      acl2_queue_lock.release()
+      Timer(5, create_new_acl2).start()
     code = code.replace('+', ' ')
-    aq.append(1)
     code = unquote(code)
     output = a[sid].issue_form(code)
     self.send_response(200, '')

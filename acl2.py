@@ -9,7 +9,7 @@ import parse_sexp
 class ACL2(object):
   def __init__(self):
     self.closed = False
-    self.acl2 = Popen('/Users/calebegg/Code/acl2/run_acl2', shell=True,
+    self.acl2 = Popen('../acl2/run_acl2', shell=True,
         stdin=PIPE, stdout=PIPE)
     self.ins = self.acl2.stdin
     self.out = self.acl2.stdout
@@ -35,14 +35,40 @@ class ACL2(object):
       char = self.out.read(1)
       buff.pop(0)
       buff.append(char)
-      if buff == ['\n', 'A', 'C', 'L', '2', ' ', '!', '>']:
+      if (buff == ['\n', 'A', 'C', 'L', '2', ' ', '!', '>'] or
+          buff[1:] == ['\n', 'A', 'C', 'L', '2', ' ', '>'] or
+          buff == ['\n', 'A', 'C', 'L', '2', ' ', 'p', '>'] or
+          buff == ['\n', 'A', 'C', 'L', '2', ' ', 'p', '>'] or
+          buff == ['A', 'C', 'L', '2', ' ', 'p', '!', '>']):
         ret = ret[:-7]
         self.expect_prompts-= 1
+        if buff[0] != '\n':
+          ret.append(char)
       else:
         ret.append(char)
     return ''.join(ret)
   def close(self):
+    if self.closed:
+      return
     self.acl2.communicate()
     self.closed = True
   def __del__(self):
     self.close()
+
+if __name__ == '__main__':
+  acl2 = ACL2()
+  code = ''
+  while True:
+    try:
+      code += raw_input('> ') + ' '
+    except (EOFError, KeyboardInterrupt):
+      acl2.close()
+      print ''
+      sys.exit(0)
+    try:
+      print acl2.issue_form(code)
+    except parse_sexp.ParseError as p:
+      if p.errno != parse_sexp.UNMATCHED_OPEN:
+        raise
+    else:
+      code = ''
