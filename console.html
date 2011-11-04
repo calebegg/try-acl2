@@ -6,6 +6,7 @@
 </script>
 <script type="text/javascript" src="jquery.console.js"></script>
 <script type="text/javascript">
+  sid = Math.random()
   function parens_match(line) {
     opens = line.match(/\(/g);
     open_cnt = (opens ? opens.length : 0);
@@ -34,8 +35,7 @@
           return;
         }
         controller.continuedPrompt = false;
-        $.get('', {code: line}, function(data) {
-          console.log(data)
+        $.get('', {code: line, sid: sid}, function(data) {
             if(!consoleCancelFlag)
               report(data);
             else {
@@ -90,6 +90,8 @@
     max-height: 200px;
     overflow: auto;
     margin: 5px 20px;
+    white-space: pre;
+    white-space: pre-wrap;
   }
   div.console span.jquery-console-prompt-label {
     font-weight: bold;

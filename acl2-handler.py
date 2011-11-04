@@ -6,7 +6,8 @@ from urllib import unquote
 
 import acl2
 
-a = acl2.ACL2()
+a = {}
+aq = [acl2.ACL2() for i in range(5)]
 
 class ACL2Handler(BaseHTTPServer.BaseHTTPRequestHandler):
   def file_handle(self, fn):
@@ -27,13 +28,18 @@ class ACL2Handler(BaseHTTPServer.BaseHTTPRequestHandler):
     if len(params_path) == 1:
       self.send_error(500, 'Missing required "code" parameter')
       return
-    code = dict([p.split('=') for p in params_path[1].split('&')])['code']
+    params = dict([p.split('=') for p in params_path[1].split('&')])
+    code = params['code']
+    sid = params.get('sid', 0)
+    if not sid in a:
+      a[sid] = aq.pop()
     code = code.replace('+', ' ')
+    aq.append(1)
     code = unquote(code)
-    output = a.issue_form(code)
+    output = a[sid].issue_form(code)
     self.send_response(200, '')
     self.wfile.write('\n' + output)
-    self.wfile.flush()
+    self.wfile.close()
 
 httpd = BaseHTTPServer.HTTPServer(('', 8000), ACL2Handler)
 httpd.serve_forever()
