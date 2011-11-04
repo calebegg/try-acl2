@@ -15,7 +15,6 @@ def lex(src):
   current = []
   state = NORMAL
   finished = False
-
   for char in src:
     if state == COMMENT:
       if char == '\n':
@@ -69,6 +68,7 @@ def lex(src):
         current = []
       else:
         current = [char]
+  yield ''.join(current)
 
 def parse(src):
   output = []
@@ -104,4 +104,4 @@ def stringify(l):
 
 if __name__ == '__main__':
   src = sys.stdin.read()
-  print([t for t in lex(src)])
+  print(parse(src))
