@@ -476,11 +476,15 @@
             updatePromptDisplay();
             if (typeof msg == 'string') {
                 message(msg,className);
-            } else {
+            } else if (msg instanceof Array) {
                 for (var x in msg) {
                     var ret = msg[x];
                     message(ret.msg,ret.className);
                 }
+            } else { // Assume it's a DOM node or jQuery object.
+              $(msg).hide()
+              inner.append(msg);
+              $(msg).show()
             }
             newPromptBox();
         };
