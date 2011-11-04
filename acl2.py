@@ -36,9 +36,11 @@ class ACL2(object):
       buff.pop(0)
       buff.append(char)
       if buff == ['\n', 'A', 'C', 'L', '2', ' ', '!', '>']:
+        ret = ret[:-7]
         self.expect_prompts-= 1
-      ret.append(char)
-    return ''.join(ret)[:-8]
+      else:
+        ret.append(char)
+    return ''.join(ret)
   def close(self):
     self.acl2.communicate()
     self.closed = True
