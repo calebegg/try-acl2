@@ -1,0 +1,80 @@
+<!doctype html>
+<title>Try ACL2</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js">
+</script>
+<script>
+  function set_out(data) {
+      $('#out').html(data + '\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+  }
+  function run() {
+    $.get('localhost', {code: $('#in').val()}, function(data) {
+      set_out(data);
+    });
+  }
+  $(function(){
+    set_out('');
+    window.onresize = function() {
+      if (window.innerWidth < 780) {
+        $('html').css('font-size', '6pt');
+      } else if (window.innerWidth < 1000) {
+        $('html').css('font-size', '8pt');
+      } else if (window.innerWidth < 1300) {
+        $('html').css('font-size', '10pt');
+      } else {
+        $('html').css('font-size', '12pt');
+      }
+      var out = $('#out');
+      out.css('width', '');
+      out_width = $('#out').width();
+      $('#in-wrap').width(window.innerWidth - out.width() - 40);
+      out.width(out_width + 20);
+    }
+    window.onresize();
+  });
+</script>
+<style>
+body, html, div, textarea, input, pre, button{
+  padding: 0;
+  margin: 0;
+  font-family: monospace;
+}
+body, html {
+  width: 100%;
+  height: 100%;
+}
+#in-wrap {
+  float: left;
+  height: 100%;
+  min-width: 200px;
+}
+#in {
+  height: 90%;
+  width: 100%;
+  border: solid #eee 1px;
+  padding: 5px;
+  font-size: inherit;
+}
+button#run {
+  font-size: 25pt;
+  height: 7%;
+  padding: 0 30px;
+  font-size: larger !important;
+}
+#out {
+  float:right;
+  border-left: solid #ccc 2px;
+  height: 100%;
+  overflow: auto;
+}
+</style>
+<div id="in-wrap">
+<textarea id="in">
+(include-book "arithmetic-3/top" :dir :system)
+
+(thm (= (+ a b) (+ b a)))
+
+(thm (= (len (nthcdr (len xs) xs)) 0))
+</textarea><br />
+<button id="run" type="submit" onclick="run()">Run &gt;&gt;</button>
+</div>
+<pre id="out"></pre>

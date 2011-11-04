@@ -1,0 +1,97 @@
+<!doctype html>
+<meta name="Content-Type" content="text/html; charset=UTF-8">
+<title>Try ACL2</title>
+<script type="text/javascript"
+  src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js">
+</script>
+<script type="text/javascript" src="jquery.console.js"></script>
+<script type="text/javascript">
+  function parens_match(line) {
+    opens = line.match(/\(/g);
+    open_cnt = (opens ? opens.length : 0);
+    closes = line.match(/\)/g);
+    close_cnt = (closes ? closes.length : 0);
+    return open_cnt - close_cnt;
+  }
+  var consoleCancelFlag = false;
+  $(document).ready(function(){
+      jq_console = $('<div class="console">');
+      $('body').append(jq_console);
+      controller = jq_console.console({
+       autofocus: true,
+       promptLabel: '> ',
+       commandValidate:function(line){
+         if (line == "") return false;
+         else return true;
+       },
+       commandHandle: function(line, report) {
+        paren_count = parens_match(line);
+        if (paren_count > 0) {
+          controller.continuedPrompt = true;
+          return;
+        } else if (paren_count < 0) {
+          report([{msg:"Unmatched ')'", className:"error"}]);
+          return;
+        }
+        controller.continuedPrompt = false;
+        $.get('', {code: line}, function(data) {
+          console.log(data)
+            if(!consoleCancelFlag)
+              report(data);
+            else {
+              report([{msg:"User interrupt",
+                className:"error"}]);
+                consoleCancelFlag = false;
+            }
+            inner = $('.jquery-console-inner')[0]
+            inner.scrollTop = inner.scrollHeight;
+        });
+       },
+       cancelHandle:function() {
+           consoleCancelFlag = true;
+       },
+       animateScroll:true,
+       promptHistory:true
+     });
+   });
+</script>
+<style type="text/css" media="screen">
+  body, html {
+    background: #eee;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    font-family: monospace;
+  }
+  div.console {
+    font-size: 14px;
+    height: 100%;
+    width: 80em;
+    background: white;
+  }
+  div.console div.jquery-console-inner {
+    height: 100%;
+    overflow: auto;
+  }
+  div.console div.jquery-console-prompt-box {
+    color: #444;
+  }
+  div.console div.jquery-console-focus span.jquery-console-cursor {
+    background: #333;
+    color: #eee;
+    font-weight: bold
+  }
+  div.console div.error {
+    color: #ef0505;
+    font-weight: bold;
+    padding: 0.1em;
+  }
+  div.console div.jquery-console-message {
+    max-height: 200px;
+    overflow: auto;
+    margin: 5px 20px;
+  }
+  div.console span.jquery-console-prompt-label {
+    font-weight: bold;
+  }
+</style>
