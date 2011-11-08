@@ -1,18 +1,27 @@
+window.onresize = resize;
 sid = Math.random()
-  function parens_match(line) {
-    opens = line.match(/\(/g);
-    open_cnt = (opens ? opens.length : 0);
-    closes = line.match(/\)/g);
-    close_cnt = (closes ? closes.length : 0);
-    return open_cnt - close_cnt;
-  }
-function insert(code) {
-
+prev = $('<input id="prev" type="button" value="&lt;" />');
+next = $('<input id="next" type="button" value="&gt;" />');
+function resize() {
+  pre_width = pre.width();
+  outer_console.width(pre_width + 10);
+  tutorial.width(body.width() - pre_width + 10);
+  info.css('right', pre_width - info.width() - 35 + 'px');
+  jq_console.height(outer_console.height() - $('h1').height());
 }
-var consoleCancelFlag = false;
-$(document).ready(function(){
-  // Set up the console.
-  jq_console = $('#console');
+function main() {
+  jq_console = $('#jq-console');
+  outer_console = $('#console');
+  console_inner = $('.jquery-console-inner');
+  pre = $('pre');
+  body = $('body');
+  tutorial = $('article');
+  info = $('aside');
+  resize();
+  tutorial.append(prev);
+  tutorial.append(next);
+  prev.click(function(){alert('prev');});
+  next.click(function(){alert('next');});
   throbber = $('#throbber');
   controller = jq_console.console(
     {
@@ -26,7 +35,6 @@ $(document).ready(function(){
         }
       },
       commandHandle: function(line, report) {
-        jq_console.css('opacity', '.8');
         throbber.show();
         paren_count = parens_match(line);
         if (paren_count > 0) {
@@ -38,6 +46,7 @@ $(document).ready(function(){
         }
         controller.continuedPrompt = false;
         $.get('', {code: line, sid: sid}, function(data) {
+          data = data.trim();
           collapse_box = $('<div class="collapse"></div>');
           collapse_box.click(function() {
             $($(this).children()[0]).toggle(1);
@@ -66,4 +75,12 @@ $(document).ready(function(){
       controller.inner.click();
     });
   });
-});
+}
+$(main);
+function parens_match(line) {
+  opens = line.match(/\(/g);
+  open_cnt = (opens ? opens.length : 0);
+  closes = line.match(/\)/g);
+  close_cnt = (closes ? closes.length : 0);
+  return open_cnt - close_cnt;
+}

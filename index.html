@@ -1,80 +1,46 @@
 <!doctype html>
 <title>Try ACL2</title>
+<link href="http://fonts.googleapis.com/css?family=Droid+Sans+Mono"
+      rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js">
 </script>
+<script type="text/javascript" src="jquery.console.js"></script>
+<script src="script.js"> </script>
 <script>
-  function set_out(data) {
-      $('#out').html(data + '\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-  }
-  function run() {
-    $.get('localhost', {code: $('#in').val()}, function(data) {
-      set_out(data);
-    });
-  }
-  $(function(){
-    set_out('');
-    window.onresize = function() {
-      if (window.innerWidth < 780) {
-        $('html').css('font-size', '6pt');
-      } else if (window.innerWidth < 1000) {
-        $('html').css('font-size', '8pt');
-      } else if (window.innerWidth < 1300) {
-        $('html').css('font-size', '10pt');
-      } else {
-        $('html').css('font-size', '12pt');
-      }
-      var out = $('#out');
-      out.css('width', '');
-      out_width = $('#out').width();
-      $('#in-wrap').width(window.innerWidth - out.width() - 40);
-      out.width(out_width + 20);
-    }
-    window.onresize();
-  });
 </script>
-<style>
-body, html, div, textarea, input, pre, button{
-  padding: 0;
-  margin: 0;
-  font-family: monospace;
-}
-body, html {
-  width: 100%;
-  height: 100%;
-}
-#in-wrap {
-  float: left;
-  height: 100%;
-  min-width: 200px;
-}
-#in {
-  height: 90%;
-  width: 100%;
-  border: solid #eee 1px;
-  padding: 5px;
-  font-size: inherit;
-}
-button#run {
-  font-size: 25pt;
-  height: 7%;
-  padding: 0 30px;
-  font-size: larger !important;
-}
-#out {
-  float:right;
-  border-left: solid #ccc 2px;
-  height: 100%;
-  overflow: auto;
-}
-</style>
-<div id="in-wrap">
-<textarea id="in">
-(include-book "arithmetic-3/top" :dir :system)
-
-(thm (= (+ a b) (+ b a)))
-
-(thm (= (len (nthcdr (len xs) xs)) 0))
-</textarea><br />
-<button id="run" type="submit" onclick="run()">Run &gt;&gt;</button>
+<link rel="stylesheet" href="style.css" />
+<div id="console"><h1>Try ACL2</h1>
+  <div id="throbber"><img src="throbber.gif" /></div>
+  <div id="jq-console"></div>
 </div>
-<pre id="out"></pre>
+<article>
+  <h2>Lesson 1. Basic Lisp</h2>
+
+  <p>ACL2 uses a subset of the Lisp programming language. Lisp's syntax is one
+  of the simplest. However, it is quite different from most other languages, so
+  let's take a moment to get acquainted with it.</p>
+
+  <p>First of all, every operation in Lisp is a function. Even very basic
+  mathematical operations, such as addition. Secondly, functions are called in
+  a different way than they are in mathematics or in most other languages.
+  While in most languages, you might write <code>f(x, y)</code>, in Lisp, you
+  write <code>(f x y)</code>.</p>
+
+  <p>The addition function is called <code>+</code>. Try adding two numbers
+  now: <code>(+ 1 2)</code></p>
+</article>
+<aside>
+  <p>
+  ACL2 is:
+  <ul>
+    <li> A Compuational Logic: A complex mechanized theorem prover that can
+         reason about code written in...
+    <li> Applicitave Common Lisp: A significantly restricted subset of Common
+         Lisp that doesn't allow for variables to be modified in place.
+  </ul>
+<footer>
+<a href="mailto:calebegg@gmail.com">Feedback</a> |
+<a href="http://github.com/calebegg/try-acl2/issues">Report a bug</a>
+</footer>
+</aside>
+<pre>--------------------------------------------------------------------------------</pre>

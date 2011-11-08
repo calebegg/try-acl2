@@ -1,5 +1,4 @@
 <!doctype html>
-<meta name="Content-Type" content="text/html; charset=UTF-8">
 <title>Try ACL2</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js">
 </script>
@@ -26,13 +25,13 @@
     font-family: sans-serif;
   }
   code, #console {
-    font-size: smaller;
+    font-size: 13px;
     font-family: "Droid Sans Mono", monospace;
   }
   code {
     cursor: pointer;
   }
-  body, #help, #console {
+  body, article, #console, #console ::-webkit-scrollbar-thumb {
     border-radius: 3px;
   }
   body {
@@ -42,12 +41,11 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     background: #94C740;
-    width: 700px;
+    width: 1100px;
     margin: 4px auto;
     -webkit-box-shadow: 0 0 5px #888;
     -moz-box-shadow: 0 0 5px #888;
     box-shadow: 0 0 8px #888;
-    padding-bottom: 18px; /* footer */
     color: #050;
   }
   a:link {
@@ -60,12 +58,15 @@
     text-align: center;
   }
   #console {
+    float:right;
+    width: 700px;
     position: relative;
     background: rgba(255,255,255,.9);
     border-width: 1px 0;
     border: solid #888 1px;
     height: 400px;
     padding: 6px;
+    margin-right: 5px;
   }
   #console .jquery-console-inner {
     height: 100%;
@@ -95,16 +96,15 @@
   #console span.jquery-console-prompt-label {
     font-weight: bold;
   }
-  #help {
-    margin: 5px;
+  article {
+    float:left;
+    width: 350px;
+    margin: 5px 0 5px 5px;
     padding: 5px;
     background: rgba(255, 255, 255, .5);
   }
   footer {
-    position: absolute;
-    width: 100%;
-    bottom: 8px;
-    height: 12px;
+    clear:both;
     text-align: center;
   }
   #throbber {
@@ -119,12 +119,82 @@
   .success {
     color: #090;
   }
+  @media screen and (min-width: 1200px) {
+    #console {
+      font-size: 13px;
+      width: 700px;
+    }
+    body {
+      width: 1180px;
+    }
+    article {
+      width: 440px;
+    }
+  }
+  @media screen and (max-width: 1200px) and (min-width: 1000px) {
+    #console {
+      font-size: 12px;
+      width: 650px;
+    }
+    body {
+      width: 980px;
+    }
+    article {
+      width: 290px;
+    }
+  }
+  @media screen and (max-width: 1000px) and (min-width: 800px) {
+    body {
+      width: 780px;
+    }
+    #console {
+      font-size: 12px;
+      width: 755px;
+    }
+    article {
+      width: 760px;
+    }
+  }
+  @media screen and (max-width: 800px) and (min-width: 500px) {
+    body {
+      width: 500px;
+    }
+    #console {
+      font-size: 10px;
+      width: 475px;
+    }
+    article {
+      font-size: 10px;
+      width: 477px;
+    }
+    article code {
+      font-size: 11px;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    body {
+      width: 400px;
+    }
+    #console {
+      margin: 0;
+      padding: 0;
+      font-size: 8px;
+      width: 400px;
+    }
+    article {
+      font-size: 10px;
+      width: 375px;
+    }
+    article code {
+      font-size: 11px;
+    }
+  }
 </style>
 <h1>Try ACL2</h1>
 <div id="console">
   <div id="throbber"><img src="throbber.gif" /></div>
 </div>
-<div id="help">
+<article>
   <p>
   ACL2 is:
   <ul>
@@ -144,7 +214,7 @@
               xs)))))</code>
     <li><code>(thm (= (sum (append xs ys)) (+ (sum xs) (sum ys))))</code>
   </ul>
-</div>
+</article>
 <footer>
 <a href="mailto:calebegg@gmail.com">Feedback</a> | <a href="http://github.com/calebegg/try-acl2/issues">Report a bug</a>
 </footer>

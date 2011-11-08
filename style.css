@@ -1,0 +1,201 @@
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  width: 100%;
+  background: #eee;
+  background-size: 10px 10px;
+  background-image: -webkit-linear-gradient(45deg,
+    rgba(255, 255, 255,  .5) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255,  .5) 50%,
+    rgba(255, 255, 255,  .5) 75%,
+    transparent 75%,
+    transparent);
+  background-image: -moz-linear-gradient(45deg,
+    rgba(255, 255, 255,  .5) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255,  .5) 50%,
+    rgba(255, 255, 255,  .5) 75%,
+    transparent 75%,
+    transparent);
+  background-image: -o-linear-gradient(45deg,
+    rgba(255, 255, 255,  .5) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255,  .5) 50%,
+    rgba(255, 255, 255,  .5) 75%,
+    transparent 75%,
+    transparent);
+  background-image: -ms-linear-gradient(45deg,
+    rgba(255, 255, 255,  .5) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255,  .5) 50%,
+    rgba(255, 255, 255,  .5) 75%,
+    transparent 75%,
+    transparent);
+  background-image: linear-gradient(45deg,
+    rgba(255, 255, 255,  .5) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255,  .5) 50%,
+    rgba(255, 255, 255,  .5) 75%,
+    transparent 75%,
+    transparent);
+}
+h1, h2 {
+  margin: 0;
+}
+h2 {
+  font-size: 14pt;
+}
+body {
+  font-size: 12pt;
+  font-family: sans-serif;
+  position: relative;
+  width: 950px;
+  margin: 10px auto;
+}
+#console, article, aside {
+  border-radius: 3px;
+  padding: 5px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, .2);
+}
+a:link {
+  color: green;
+}
+#console {
+  width: 480px;
+  height: 380px;
+  position: absolute;
+  right: 0;
+  background: #F4F9EC;
+  z-index: 1;
+}
+pre {
+  display: inline-block;
+}
+#console, code, pre {
+  font-family: "Dejavu Sans Mono", monospace;
+  font-size: 11px;
+}
+.jquery-console-inner {
+  height: 100%;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+code {
+  white-space: nowrap;
+  background: rgba(255, 255, 255, .4);
+  padding: 3px;
+  border-radius: 2px;
+}
+article {
+  position: absolute;
+  left: 0;
+  top: 20px;
+  width: 300px;
+  padding-right: 25px;
+  padding-bottom: 40px !important; /* prev/next */
+  background: #C9E29F;
+  min-height: 400px;
+}
+aside {
+  background: #94C740;
+  position: absolute;
+  right: 40px;
+  top: 370px;
+  width: 480px;
+  padding-left: 25px;
+  padding-top: 20px;
+  z-index: -1;
+}
+footer {
+  text-align: center;
+}
+pre {
+  visibility: hidden;
+}
+#prev, #next {
+  position: absolute;
+  bottom: 5px;
+  height: 30px;
+  border-radius: 10px;
+  border: 0px;
+  width: 50px;
+  background: #b9d28F;
+  cursor: pointer;
+}
+#prev {
+  left: 5px;
+}
+#next {
+  right: 5px;
+}
+.jquery-console-cursor {
+  background: black;
+}
+#throbber {
+  display: none;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+@media screen and (min-width: 1200px) {
+  body {
+    width: 1150px;
+  }
+  #console, pre {
+    font-size: 14px;
+  }
+}
+@media screen and (min-width: 800px) and (max-width: 1200px) {
+  body {
+    width: 95% !important;
+  }
+}
+@media screen and (min-width: 800px) and (max-width: 1000px) {
+  #console, pre {
+    font-size: 10px;
+  }
+  aside {
+    width: 380px;
+  }
+}
+@media screen and (min-width: 600px) and (max-width: 800px) {
+  #console, pre {
+    font-size: 6pt;
+  }
+  body {
+    width: 97%;
+  }
+  aside {
+    width: 300px;
+  }
+}
+@media screen and (max-width: 600px) {
+  #console, pre {
+    font-size: 6pt;
+  }
+  #console {
+    height: 200px;
+  }
+  #console, aside, article {
+    position: relative; !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    min-height: 0 !important;
+    padding: 5px;
+  }
+  body {
+    width: 100%;
+  }
+}

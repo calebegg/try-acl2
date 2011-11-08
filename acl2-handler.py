@@ -34,7 +34,7 @@ class ACL2Handler(BaseHTTPServer.BaseHTTPRequestHandler):
     index.close()
   def do_GET(self):
     if self.path == '/':
-      self.file_handle('console.html')
+      self.file_handle('index.html')
       return
     elif self.path == '/jquery.console.js':
       self.file_handle('jquery.console.js')
