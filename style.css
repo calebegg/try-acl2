@@ -1,7 +1,7 @@
 * {
-  box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
@@ -10,44 +10,29 @@ html {
   background: #eee;
   background-size: 10px 10px;
   background-image: -webkit-linear-gradient(45deg,
-    rgba(255, 255, 255,  .5) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255,  .5) 50%,
-    rgba(255, 255, 255,  .5) 75%,
-    transparent 75%,
+    rgba(255, 255, 255,  .5) 25%, transparent 25%,
+    transparent 50%, rgba(255, 255, 255,  .5) 50%,
+    rgba(255, 255, 255,  .5) 75%, transparent 75%,
     transparent);
   background-image: -moz-linear-gradient(45deg,
-    rgba(255, 255, 255,  .5) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255,  .5) 50%,
-    rgba(255, 255, 255,  .5) 75%,
-    transparent 75%,
+    rgba(255, 255, 255,  .5) 25%, transparent 25%,
+    transparent 50%, rgba(255, 255, 255,  .5) 50%,
+    rgba(255, 255, 255,  .5) 75%, transparent 75%,
     transparent);
   background-image: -o-linear-gradient(45deg,
-    rgba(255, 255, 255,  .5) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255,  .5) 50%,
-    rgba(255, 255, 255,  .5) 75%,
-    transparent 75%,
+    rgba(255, 255, 255,  .5) 25%, transparent 25%,
+    transparent 50%, rgba(255, 255, 255,  .5) 50%,
+    rgba(255, 255, 255,  .5) 75%, transparent 75%,
     transparent);
   background-image: -ms-linear-gradient(45deg,
-    rgba(255, 255, 255,  .5) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255,  .5) 50%,
-    rgba(255, 255, 255,  .5) 75%,
-    transparent 75%,
+    rgba(255, 255, 255,  .5) 25%, transparent 25%,
+    transparent 50%, rgba(255, 255, 255,  .5) 50%,
+    rgba(255, 255, 255,  .5) 75%, transparent 75%,
     transparent);
   background-image: linear-gradient(45deg,
-    rgba(255, 255, 255,  .5) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255,  .5) 50%,
-    rgba(255, 255, 255,  .5) 75%,
-    transparent 75%,
+    rgba(255, 255, 255,  .5) 25%, transparent 25%,
+    transparent 50%, rgba(255, 255, 255,  .5) 50%,
+    rgba(255, 255, 255,  .5) 75%, transparent 75%,
     transparent);
 }
 p {
@@ -79,17 +64,29 @@ body {
   padding: 5px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, .2);
 }
-a:link {
+a:link, a:visited, a:active {
   color: green;
 }
 #console {
-  width: 480px;
+  width: 640px;
   height: 380px;
   position: absolute;
   right: 0;
   background: #FFFEE3;
   z-index: 1;
   overflow: auto;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #eee;
+}
+::-webkit-scrollbar-thumb {
+  background: #94C740;
+}
+#console .jquery-console-prompt-box {
+  color: #444;
 }
 #console, code, pre {
   font-family: "Dejavu Sans Mono", monospace;
@@ -136,16 +133,24 @@ pre {
   bottom: 5px;
   height: 30px;
   border-radius: 3px;
-  border: 0px;
+  border: 0;
   width: 50px;
   background: #b9d28F;
   cursor: pointer;
+  -webkit-transition: background-color .1s linear;
+  -moz-transition: background-color .1s linear;
+  -o-transition: background-color .1s linear;
+  -ms-transition: background-color .1s linear;
+  transition: background-color .1s linear;
+}
+#prev:hover, #next:hover {
+  background: #a9c27f;
 }
 #prev {
-  left: 5px;
+  left: 25%;
 }
 #next {
-  right: 5px;
+  right: 25%;
 }
 .jquery-console-cursor {
   border: solid black 1px;
@@ -158,6 +163,16 @@ pre {
   position: absolute;
   top: 5px;
   right: 5px;
+}
+.collapse {
+  cursor: pointer;
+}
+strong {
+  font-weight: normal;
+  display: inline-block;
+}
+strong:first-letter {
+  text-decoration: underline;
 }
 @media screen and (min-width: 1200px) {
   body {
@@ -199,7 +214,7 @@ pre {
     height: 200px;
   }
   #console, aside, article {
-    position: relative; !important;
+    position: relative !important;
     top: 0;
     left: 0;
     width: 100% !important;
