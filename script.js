@@ -7,7 +7,7 @@ function resize() {
   outer_console.width(pre_width + 10);
   tutorial.width(body.width() - pre_width + 10);
   info.css('right', pre_width - info.width() - 35 + 'px');
-  jq_console.height(outer_console.height() - $('h1').height());
+  jq_console.height(outer_console.height() - $('h1').height() - 10);
 }
 function main() {
   jq_console = $('#jq-console');
@@ -63,8 +63,8 @@ function main() {
           }
           jq_console.css('opacity', '1');
           throbber.hide();
-          inner = $('.jquery-console-inner')[0]
-            inner.scrollTop = inner.scrollHeight;
+          outer_console_elem = outer_console[0];
+          outer_console_elem.scrollTop = outer_console_elem.scrollHeight;
         });
       },
   });
