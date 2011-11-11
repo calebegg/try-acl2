@@ -413,7 +413,8 @@
 
         // Scroll to the bottom of the view
         function scrollToBottom() {
-            inner.attr({ scrollTop: inner.attr("scrollHeight") });;
+            con = $('#console')[0]
+            con.scrollTop = con.scrollHeight;
         };
 
 	function cancelExecution() {

@@ -1,10 +1,8 @@
 window.onresize = resize;
 sid = Math.random();
-prev = $('<input id="prev" type="button" value="&lt;" />');
-next = $('<input id="next" type="button" value="&gt;" />');
+current_section = 0;
 function resize() {
   pre_width = pre.width();
-  console.log(pre_width);
   if (pre_width > 800) {
     setTimeout(resize, 100);
     return;
@@ -15,7 +13,26 @@ function resize() {
   jq_console.height(outer_console.height() - $('h1').height() - 10);
 }
 opacity = 0;
+function showPrevSection() {
+  if (current_section === 0) {
+    return;
+  } else {
+    sections.eq(current_section).hide();
+    current_section--;
+    sections.eq(current_section).show();
+  }
+}
+function showNextSection() {
+  if (current_section >= sections.length - 1) {
+    return;
+  } else {
+    sections.eq(current_section).hide();
+    current_section++;
+    sections.eq(current_section).show();
+  }
+}
 function main() {
+  // Globals
   jq_console = $('#jq-console');
   outer_console = $('#console');
   console_inner = $('.jquery-console-inner');
@@ -23,12 +40,14 @@ function main() {
   body = $('body');
   tutorial = $('article');
   info = $('aside');
-  resize();
-  tutorial.append(prev);
-  tutorial.append(next);
-  prev.click(function(){alert('prev');});
-  next.click(function(){alert('next');});
+  sections = $('section');
   throbber = $('#throbber');
+  resize();
+  // Set up tutorial
+  sections.hide();
+  sections.eq(0).show();
+  $('#prev').click(showPrevSection);
+  $('#next').click(showNextSection);
   // Shadow effect on scrolled console
   function consoleShadowScrollHandler() {
     if (this.scrollTop > 0) {
