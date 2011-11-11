@@ -1,1 +1,4 @@
 *.pyc
+markdown/*
+*.swp
+*.swo
