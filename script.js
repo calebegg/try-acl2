@@ -36,7 +36,7 @@ function main() {
   jq_console = $('#jq-console');
   outer_console = $('#console');
   console_inner = $('.jquery-console-inner');
-  pre = $('pre');
+  pre = $('#ref');
   body = $('body');
   tutorial = $('article');
   info = $('aside');

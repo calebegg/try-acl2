@@ -88,7 +88,7 @@ a:link, a:visited, a:active {
 #console .jquery-console-prompt-box {
   color: #444;
 }
-#console, code, pre {
+#console, code, #ref {
   font-family: "Dejavu Sans Mono", monospace;
   font-size: 11px;
 }
@@ -96,7 +96,6 @@ a:link, a:visited, a:active {
   white-space: pre-wrap;
 }
 code {
-  white-space: nowrap;
   background: rgba(255, 255, 255, .4);
   padding: 3px;
   border-radius: 2px;
@@ -124,7 +123,7 @@ aside {
 footer {
   text-align: center;
 }
-pre {
+#ref {
   position: absolute;
   visibility: hidden;
 }
@@ -167,7 +166,7 @@ pre {
 .collapse {
   cursor: pointer;
 }
-strong {
+aside strong {
   font-weight: normal;
   display: inline-block;
 }
@@ -181,7 +180,7 @@ section {
   body {
     width: 1150px;
   }
-  #console, pre {
+  #console, #ref {
     font-size: 14px;
   }
 }
@@ -191,7 +190,7 @@ section {
   }
 }
 @media screen and (min-width: 800px) and (max-width: 1000px) {
-  #console, pre {
+  #console, #ref {
     font-size: 10px;
   }
   aside {
@@ -199,7 +198,7 @@ section {
   }
 }
 @media screen and (min-width: 600px) and (max-width: 800px) {
-  #console, pre {
+  #console, #ref {
     font-size: 6pt;
   }
   body {
@@ -210,7 +209,7 @@ section {
   }
 }
 @media screen and (max-width: 600px) {
-  #console, pre {
+  #console, #ref {
     font-size: 6pt;
   }
   #console {
