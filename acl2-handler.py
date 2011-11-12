@@ -15,14 +15,10 @@ acl2_queue_semaphore = Semaphore(INITIAL_ACL2_COUNT)
 acl2_queue_lock = Lock()
 
 def create_new_acl2():
-  print 'creating new acl2'
   acl2_queue_lock.acquire()
-  print 'got lock'
   acl2_queue.append(acl2.ACL2())
-  print 'done creating'
   acl2_queue_semaphore.release()
   acl2_queue_lock.release()
-  print 'done'
 
 class ACL2Handler(BaseHTTPServer.BaseHTTPRequestHandler):
   def file_handle(self, fn):
@@ -47,6 +43,9 @@ class ACL2Handler(BaseHTTPServer.BaseHTTPRequestHandler):
       return
     elif self.path == '/throbber.gif':
       self.file_handle('throbber.gif')
+      return
+    elif self.path == '/favicon.ico':
+      self.file_handle('favicon.ico')
       return
     params_path = self.path.split('?')
     if len(params_path) == 1:
