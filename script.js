@@ -88,15 +88,19 @@ function main() {
           data = data.trim();
           collapse_box = $('<div class="collapse"></div>');
           collapse_box.click(function() {
-            $($(this).children()[0]).toggle(1);
+            $($(this).children()[1]).toggle(1);
           });
-          if (data.match('Proof succeeded.')) {
-            collapse_box.text('Succeeded. (click for details)');
-            collapse_box.addClass('success');
-            collapse_box.append($('<div>').text(data).hide().addClass('jquery-console-message'));
+          collapse_box.append(message = $('<div>'));
+          collapse_box.append($('<div>')
+                                .text(data)
+                                .hide()
+                                .addClass('jquery-console-message'));
+          if (data.match('FAILED')) {
+            message.text('Failed. (click for details)').addClass('failure');
             report(collapse_box);
-          } else if (data.match('FAILED')) {
-            report(data);
+          } else if (data.match('Proof succeeded.') || data.match('trivial')) {
+            message.text('Succeeded. (click for details)').addClass('success');
+            report(collapse_box);
           } else{
             report(data);
           }

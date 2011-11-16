@@ -37,6 +37,7 @@ html {
 }
 p {
   margin: 1em 0;
+  line-height: 140%;
 }
 h1, h2 {
   font-family: Lobster, sans-serif;
@@ -53,10 +54,10 @@ h2 {
   border-bottom: solid 1px rgba(0, 0, 0, .4);
 }
 body {
-  font-size: 12pt;
+  font-size: 14px;
   font-family: sans-serif;
   position: relative;
-  width: 950px;
+  width: 1150px;
   margin: 10px auto;
 }
 #console, article, aside {
@@ -90,21 +91,24 @@ a:link, a:visited, a:active {
 }
 #console, code, #ref {
   font-family: "Dejavu Sans Mono", monospace;
-  font-size: 11px;
 }
 .jquery-console-inner {
   white-space: pre-wrap;
+  word-wrap: break-word;
 }
 code {
-  background: rgba(255, 255, 255, .4);
-  padding: 3px;
-  border-radius: 2px;
+  background: rgba(255, 255, 255, .2);
+  padding: 1px;
+  border-radius: 1px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  cursor: pointer;
 }
 article {
   position: absolute;
   left: 0;
   top: 20px;
-  width: 300px;
+  width: 520px;
   padding-right: 25px;
   padding-bottom: 40px !important; /* prev/next */
   background: #C9E29F;
@@ -164,7 +168,13 @@ footer {
   right: 5px;
 }
 .collapse {
+  padding-left: 10px;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAALCAYAAACzkJeoAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADhJREFUeNpi/P//PwNOAJU8A8SCuCT/Y1WAJImpAE0SVQEWSbgCJtxOBeomxVicDsLpFayBABBgAFRgNawYTSvmAAAAAElFTkSuQmCC) no-repeat 0 2px;
+
+}
+.success, .failure {
   cursor: pointer;
+  font-weight: bold;
 }
 aside strong {
   font-weight: normal;
@@ -176,17 +186,9 @@ strong:first-letter {
 section {
   overflow: hidden;
 }
-@media screen and (min-width: 1200px) {
-  body {
-    width: 1150px;
-  }
-  #console, #ref {
-    font-size: 14px;
-  }
-}
 @media screen and (min-width: 800px) and (max-width: 1200px) {
   body {
-    width: 95% !important;
+    width: 98% !important;
   }
 }
 @media screen and (min-width: 800px) and (max-width: 1000px) {
@@ -197,20 +199,20 @@ section {
     width: 380px;
   }
 }
-@media screen and (min-width: 600px) and (max-width: 800px) {
+@media screen and (min-width: 700px) and (max-width: 800px) {
   #console, #ref {
-    font-size: 6pt;
+    font-size: 8px;
   }
   body {
-    width: 97%;
+    width: 99%;
   }
   aside {
     width: 300px;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
   #console, #ref {
-    font-size: 6pt;
+    font-size: 8px;
   }
   #console {
     height: 200px;
