@@ -193,7 +193,7 @@ section {
 }
 @media screen and (min-width: 800px) and (max-width: 1000px) {
   #console, #ref {
-    font-size: 10px;
+    font-size: 12px;
   }
   aside {
     width: 380px;
