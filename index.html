@@ -16,7 +16,6 @@
   <div id="jq-console"></div>
 </div>
 <article>
-</section>
 <section>
 <h2>Lesson 1. Lisp</h2>
 <p>ACL2 uses a subset of the Lisp programming language. Lisp syntax is one of the simplest ones of any programming language. However, it is different from most other languages, so let's take a moment to get acquainted with it.</p>
@@ -47,7 +46,7 @@
 <pre><code>(&lt; a b) (&gt; a b) (&lt;= a b) (&gt;= a b) (= a b) (/= a b)
 </code></pre>
 <p>These are the six equality and inequality tests. They should be familiar to you. The final one is 'not equal'; the slash is meant to signify the crossed out equal sign of mathematics.</p>
-<pre><code>(integerp x) (rationalp x) (complexp x) (acl2-numberp x) (natp x)
+<pre><code>(integerp x) (rationalp x) (complex-rationalp x) (acl2-numberp x) (natp x)
 </code></pre>
 <p>These functions recognize (return <code>t</code>) some of the different types of numbers available in ACL2. The terminal '<code>p</code>' is a common idiom from Lisp and means "predicate". You can imagine it as a sort of question mark; <code>(natp i)</code> means "Is <code>i</code> an natural number?".</p>
 <p>Try this: <code>(if (= (+ 1 3) (+ 5 2 -3)) "Equal" "Not equal")</code></p>
@@ -68,7 +67,7 @@
 <pre><code>(let ((alias1 value1) (alias2 value2) ...) body)
 </code></pre>
 <p>where the aliases are symbols (made up of letters, numbers, and/or some symbols) and the values are either literal values, or, more often, function calls.</p>
-<p>Try this: <code>(let ((xs (append '(1 2 3) '(4 5 6)))) (and (listp res) (true-listp res)))</code></p>
+<p>Try this: <code>(let ((xs (append '(1 2 3) '(4 5 6)))) (and (listp xs) (true-listp xs)))</code></p>
 </section>
 <section>
 <h2>Lesson 1. Lisp</h2>
@@ -76,19 +75,19 @@
 <p>To compute the length of a list, use (len xs): <code>(len '(1 2 3 4))</code>.</p>
 </section>
 <section>
-<h2>Lesson 1. Lisp</h2>
+<h2>Lesson 2. Functions</h2>
 <p>Now that you've got a basic understanding of some of the built-in functions of lisp, let's move on to defining new ones. The function you use to define new functions is <code>defun</code>:</p>
 <pre><code>(defun name (param1 param2 ...) body)
 </code></pre>
 <p>Try adding this function that squares numbers: <code>(defun square (x) (* x x))</code>.</p>
 </section>
 <section>
-<h2>Lesson 1. Lisp</h2>
+<h2>Lesson 2. Functions</h2>
 <p>An important thing happened here: in addition to just adding the new function, ACL2 did something interesting: it proved that no matter what input you give to your new function, it will, eventually, complete. It won't loop or call itself forever. Now, that's not too surprising, given how simple <code>(square ...)</code> is. But it can be quite a task for complex functions.</p>
 <p>Try out your new function now by squaring some of the types of numbers that ACL2 supports.</p>
 </section>
 <section>
-<h2>Lesson 1. Lisp</h2>
+<h2>Lesson 2. Functions</h2>
 <p>Next, we're going to enter a recursive function; <code>factorial</code>. The factorial of a natural number is the product of the number and all the natural numbers below it. In other words, <code>(factorial n)</code> = <code>(* n (factorial (- n 1)))</code>. As a special case (called the "base case"), <code>(factorial 0)</code> = 1. A naive (but wrong) approach might be this:</p>
 <pre><code>(defun factorial-wrong (n)
   (if (= n 0)
@@ -110,7 +109,7 @@
 </code></pre>
 </section>
 <section>
-<h2>Lesson 1. Lisp</h2>
+<h2>Lesson 2. Functions</h2>
 <p>You'll notice that <code>(factorial (list 1 2 3))</code> returns <code>1</code>, an inapplicable answer. This is a little messy, but fine. Later, you can add <code>:guard</code>s to functions to ensure that users don't execute them on irrelevant values. (The prover, on the other hand, ignores guards, so it's best to do the same for now).</p>
 <p>Now let's try defining a function on lists; <code>rev</code>, which reverses the list you give it. The base case for <code>rev</code> is the empty list, the reverse of which is just the empty list. For the general case, the reversed list is just the reversed "rest" of the list with the "first" element at the end, like so:</p>
 <pre><code>(defun rev (xs)
@@ -120,7 +119,7 @@
 </code></pre>
 </section>
 <section>
-<h2>Lesson 2. Theorems</h2>
+<h2>Lesson 3. Theorems</h2>
 <p>Of course, proving that functions terminate is only a small part of proving that they work. ACL2 also lets you prove arbitrary theorems about functions. We will start out using the <code>(thm ...)</code> function to do this. Try the following pretty obvious theorem: If a number is a natural number, that number is also an integer; <code>(thm (implies (natp i) (integerp i)))</code>
 <!--
   (thm (= (+ a b) (+ b a)))
