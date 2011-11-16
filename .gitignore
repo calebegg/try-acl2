@@ -3,3 +3,6 @@ markdown/*
 *.swp
 *.swo
 tutorial.html
+handler.log
+
+._.gitignore
