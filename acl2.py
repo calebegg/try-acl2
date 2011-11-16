@@ -23,7 +23,7 @@ def check_none_in_blacklist(code, top_level=True):
   with-live-state ec-call comp defexec defproxy defun-nx make-event memoize
   profile redo-flat set-body unmemoize include-book break-on-error
   close-trace-file open-trace-file trace! trace$ wet untrace$
-  install-new-raw-prompt
+  install-new-raw-prompt program :program
   '''.split()
   for term in code:
     if isinstance(term, list):
