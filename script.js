@@ -1,10 +1,11 @@
-window.onresize = resize;
+window.onresize = on_resize;
 sid = Math.random();
 current_section = 0;
-function resize() {
+function on_resize() {
   pre_width = pre.width();
   if (pre_width > 800) {
-    setTimeout(resize, 100);
+    // An awful kludge to wait for the font to load. :-(
+    setTimeout(on_resize, 100);
     return;
   }
   outer_console.width(pre_width + 10);
@@ -42,7 +43,7 @@ function main() {
   info = $('aside');
   sections = $('section');
   throbber = $('#throbber');
-  resize();
+  on_resize();
   // Set up tutorial
   sections.hide();
   sections.eq(0).show();
@@ -66,6 +67,7 @@ function main() {
     {
       autofocus: true,
       promptLabel: '> ',
+      continuedPromptLabel: '... ',
       commandValidate: function(line) {
         if (line === "") {
           return false;
@@ -74,15 +76,22 @@ function main() {
         }
       },
       commandHandle: function(line, report) {
-        throbber.show();
         paren_count = parens_match(line);
+        console.log('Line: ' + line);
         if (paren_count > 0) {
           controller.continuedPrompt = true;
+          indent = '';
+          for (i = 0; i < paren_count - 1; i++) {
+            indent += '  ';
+          }
+          controller.setContinuedPromptLabel('... ' + indent);
           return;
         } else if (paren_count < 0) {
+          controller.continuedPrompt = false;
           report([{msg:"Unmatched ')'", className:"error"}]);
           return;
         }
+        throbber.show();
         controller.continuedPrompt = false;
         $.get('', {code: line, sid: sid}, function(data) {
           data = data.trim();
@@ -98,7 +107,8 @@ function main() {
           if (data.match('FAILED')) {
             message.text('Failed. (click for details)').addClass('failure');
             report(collapse_box);
-          } else if (data.match('Proof succeeded.') || data.match('trivial')) {
+          } else if (data.match('Proof succeeded.') || data.match('trivial') ||
+              data.match('Q\\.E\\.D\\.')) {
             message.text('Succeeded. (click for details)').addClass('success');
             report(collapse_box);
           } else{
@@ -111,7 +121,6 @@ function main() {
         });
       }
   });
-  // Add links to <code> elements.
   $('code').each(function() {
     $(this).click(function() {
       controller.promptText($(this).text());
@@ -121,9 +130,17 @@ function main() {
 }
 $(main);
 function parens_match(line) {
+  // Remove string literals
+  line = line.replace(/"([^"]|\\")*?"/g, "")
+  // Remove pipe symbols
+  line = line.replace(/\|[^\|]*?\|/g, "")
   opens = line.match(/\(/g);
   open_cnt = (opens ? opens.length : 0);
   closes = line.match(/\)/g);
   close_cnt = (closes ? closes.length : 0);
+  if (line.match(/"/g) || line.match(/\|/g)) {
+    // Unterminated string
+    return 1 + open_cnt - close_cnt;
+  }
   return open_cnt - close_cnt;
 }
