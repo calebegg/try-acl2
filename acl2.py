@@ -32,12 +32,12 @@ def check_none_in_blacklist(code, top_level=True):
             "security reasons. Download ACL2 to try this feature.")
       else:
         check_none_in_blacklist(term, False)
-    elif isinstance(term, str):
+    elif isinstance(term, str) or isinstance(term, unicode):
       if top_level and (term in blacklist or ':' + term in blacklist):
         raise BlacklistException(term + " is not allowed here for security " +
             "reasons. Download ACL2 to try this feature.")
     else:
-      raise BlacklistException("Encountered an unknown problem processing " + term)
+      raise BlacklistException("Encountered an unknown problem processing " + str(term) + " of type " + str(type(term)))
 
 class ACL2(object):
   def __init__(self):
