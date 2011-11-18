@@ -11,9 +11,6 @@ from subprocess import Popen, PIPE
 
 import acl2
 
-def pwd():
-  return os.getcwd()
-
 MAX_SESSION_LENGTH = 60 * 60 # One hour
 INITIAL_ACL2_COUNT = 10
 
