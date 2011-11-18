@@ -123,6 +123,11 @@ Now let's try defining a function on lists; `rev`, which reverses the list you g
 Lesson 3. Theorems
 -----------------
 Of course, proving that functions terminate is only a small part of proving that they work. ACL2 also lets you prove arbitrary theorems about functions. We will start out using the `(thm ...)` function to do this. Try the following pretty obvious theorem: If a number is a natural number, that number is also an integer; `(thm (implies (natp i) (integerp i)))`
+
+This tutorial is a work in progress
+-----------------------------------
+Feel free to email any comments you have to me at calebegg@gmail.com, and come back for more later.
+
 <!--
   (thm (= (+ a b) (+ b a)))
   (thm (= (* a 2) (+ a a)))

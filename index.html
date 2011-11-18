@@ -29,7 +29,7 @@
 <section>
 <h2>Lesson 1. Lisp</h2>
 <p>You can use the single quote mark as a type of shorthand for creating lists. Unlike with <code>(list ...)</code>, the single quote marker also "quotes" the items inside of it. While <code>(list 1 2 (+ 1 2))</code> would be the same as <code>(list 1 2 3)</code>, <code>'(1 2 (+ 1 2))</code> is the same as <code>(list 1 2 (list '+ 1 2))</code>.</p>
-<p>The single quoted + sign is called a "symbol". You can use the single quote to create a symbol out of any simple sequence of characters, such as <code>'test</code> or <code>'odd</code>.</p>
+<p>The single quoted + sign, <code>'+</code> is called a "symbol". You can use the single quote to create a symbol out of any simple sequence of characters, such as <code>'not-found</code>, <code>'valid</code>, or `'1+1.</p>
 <p><code>append</code> concatenates two (or more) lists together. Try: <code>(append '(1 2 3) '(4 5 6))</code></p>
 </section>
 <section>
@@ -46,7 +46,7 @@
 <pre><code>(&lt; a b) (&gt; a b) (&lt;= a b) (&gt;= a b) (= a b) (/= a b)
 </code></pre>
 <p>These are the six equality and inequality tests. They should be familiar to you. The final one is 'not equal'; the slash is meant to signify the crossed out equal sign of mathematics.</p>
-<pre><code>(integerp x) (rationalp x) (complex-rationalp x) (acl2-numberp x) (natp x)
+<pre><code>(integerp x) (rationalp x) (acl2-numberp x) (complex-rationalp x) (natp x)
 </code></pre>
 <p>These functions recognize (return <code>t</code>) some of the different types of numbers available in ACL2. The terminal '<code>p</code>' is a common idiom from Lisp and means "predicate". You can imagine it as a sort of question mark; <code>(natp i)</code> means "Is <code>i</code> an natural number?".</p>
 <p>Try this: <code>(if (= (+ 1 3) (+ 5 2 -3)) "Equal" "Not equal")</code></p>
@@ -72,7 +72,7 @@
 <section>
 <h2>Lesson 1. Lisp</h2>
 <p>In the previous example, I snuck in an extra simple function: <code>(and ...)</code>. It does what you'd expect from boolean algebra, and you can also use <code>(or ...)</code>, <code>(not ...)</code>, <code>(implies p q)</code>, etc.</p>
-<p>To compute the length of a list, use (len xs): <code>(len '(1 2 3 4))</code>.</p>
+<p>There's one final important built-in function that I'd like to introduce. To compute the length of a list, use (len xs): <code>(len '(1 2 3 4))</code>.</p>
 </section>
 <section>
 <h2>Lesson 2. Functions</h2>
@@ -120,7 +120,11 @@
 </section>
 <section>
 <h2>Lesson 3. Theorems</h2>
-<p>Of course, proving that functions terminate is only a small part of proving that they work. ACL2 also lets you prove arbitrary theorems about functions. We will start out using the <code>(thm ...)</code> function to do this. Try the following pretty obvious theorem: If a number is a natural number, that number is also an integer; <code>(thm (implies (natp i) (integerp i)))</code>
+<p>Of course, proving that functions terminate is only a small part of proving that they work. ACL2 also lets you prove arbitrary theorems about functions. We will start out using the <code>(thm ...)</code> function to do this. Try the following pretty obvious theorem: If a number is a natural number, that number is also an integer; <code>(thm (implies (natp i) (integerp i)))</code></p>
+</section>
+<section>
+<h2>This tutorial is a work in progress</h2>
+<p>Feel free to email any comments you have to me at calebegg@gmail.com, and come back for more later.</p>
 <!--
   (thm (= (+ a b) (+ b a)))
   (thm (= (* a 2) (+ a a)))
@@ -155,7 +159,7 @@
   (defthm (implies (and (orderedp xs) (orderedp ys)) (orderedp (merge xs ys))))
   Qsort
 6. I/O
---></p></section>
+--></section>
 <input type="button" id="prev" value="&lt;" />
 <input type="button" id="next" value="&gt;" />
 </article>
