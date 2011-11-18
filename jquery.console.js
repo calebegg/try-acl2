@@ -590,6 +590,10 @@
             return promptText;
         };
 
+        extern.setContinuedPromptLabel = function(label) {
+          continuedPromptLabel = label;
+        }
+
         ////////////////////////////////////////////////////////////////////////
         // Update the prompt display
         function updatePromptDisplay(){
