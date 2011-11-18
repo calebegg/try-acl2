@@ -15,7 +15,7 @@ def pwd():
   return os.getcwd()
 
 MAX_SESSION_LENGTH = 60 * 60 # One hour
-INITIAL_ACL2_COUNT = 1#10
+INITIAL_ACL2_COUNT = 10
 
 logging.basicConfig(format="[%(asctime)s | %(levelname)s]: %(message)s",
                     filename="handler.log",
