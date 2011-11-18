@@ -1,8 +1,9 @@
 *.pyc
-markdown/*
 *.swp
 *.swo
 tutorial.html
 handler.log
-
+markdown/*
+cherrypy/*
+cherryd
 ._.gitignore
