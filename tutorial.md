@@ -6,6 +6,8 @@ First of all, every operation in Lisp is a function. Even very basic mathematica
 
 The addition function is called `+`. Try adding two numbers now: `(+ 1 2)`
 
+*Tip: You can click on any code you see in this tutorial to insert it at the prompt.*
+
 Lesson 1. Lisp
 --------------
 'Lisp' is short for 'list processing'. Lists, specifically [linked lists](http://en.wikipedia.org/wiki/Linked_list), are a fundamental part of how Lisp represents and manipulates data. The function used to create a list is called, appropriately, `list`. Try creating a list: `(list 8 6 7 5 3 0 9)`
