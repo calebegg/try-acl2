@@ -61,7 +61,7 @@ class ACL2Handler(BaseHTTPServer.BaseHTTPRequestHandler):
     # Otherwise, look for the code parameter.
     params_path = self.path.split('?')
     if len(params_path) == 1:
-      self.send_error(500, 'Missing required "code" parameter')
+      self.send_error(404, 'Not found.')
       return
     logger.debug("request contains params")
     params = dict([p.split('=') for p in params_path[1].split('&')])
