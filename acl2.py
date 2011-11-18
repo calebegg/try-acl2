@@ -48,7 +48,7 @@ class ACL2(object):
     self.out = self.acl2.stdout
     self.expect_prompts = 1
     self.last_command_at = time.time()
-    self.issue_form('()')
+    self.issue_form('(set-guard-checking :none)')
   def issue_form(self, form):
     logger.debug("Entering issue_form")
     if self.closed:
@@ -82,10 +82,11 @@ class ACL2(object):
           buff == ['\n', 'A', 'C', 'L', '2', ' ', 'p', '>'] or
           buff == ['A', 'C', 'L', '2', ' ', 'p', '!', '>']):
         logger.debug("Got a prompt")
-        ret = ret[:-7]
+        if buff[1:] == ['\n', 'A', 'C', 'L', '2', ' ', '>']:
+          ret = ret[:-6]
+        else:
+          ret = ret[:-7]
         self.expect_prompts-= 1
-        if buff[0] != '\n':
-          ret.append(char)
       else:
         ret.append(char)
     result = ''.join(ret)
