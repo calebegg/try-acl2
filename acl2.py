@@ -15,14 +15,14 @@ class BlacklistException(Exception): pass
 
 def check_none_in_blacklist(code, top_level=True):
   blacklist = '''
-  progn! progn pprogn set-raw-mode :set-raw-mode trace open-output-channel er
-  error1 er-progn fms fms! fmt! fmt fmt1 fmt1! getenv$
-  get-output-stream-string$ illegal mbe mbe1 mbt open-input-channel-p
-  close-input-channel close-output-channel open-output-channel-p read-byte$
-  read-char$ read-object setenv$ standard-co standard-oi sys-call the
-  with-live-state ec-call comp defexec defproxy defun-nx make-event memoize
-  profile redo-flat set-body unmemoize include-book break-on-error
-  close-trace-file open-trace-file trace! trace$ wet untrace$
+  progn! progn pprogn set-raw-mode :set-raw-mode set-raw-mode-on
+  set-raw-mode-on! trace open-output-channel er error1 er-progn fms fms! fmt!
+  fmt fmt1 fmt1! getenv$ get-output-stream-string$ illegal mbe mbe1 mbt
+  open-input-channel-p close-input-channel close-output-channel
+  open-output-channel-p read-byte$ read-char$ read-object setenv$ standard-co
+  standard-oi sys-call the with-live-state ec-call comp defexec defproxy
+  defun-nx make-event memoize profile redo-flat set-body unmemoize include-book
+  break-on-error close-trace-file open-trace-file trace! trace$ wet untrace$
   install-new-raw-prompt program :program mini-proveall
   '''.split()
   for term in code:
