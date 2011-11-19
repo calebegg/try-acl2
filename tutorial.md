@@ -47,7 +47,7 @@ Try this: `(if (= (+ 1 3) (+ 5 2 -3)) "Equal" "Not equal")`
 Lesson 1. Lisp
 --------------
     (endp xs) (listp xs) (true-listp xs) (equal xs ys)
-These functions relate to lists. `(endp xs)` checks to see if `xs` is an empty list (if we are "at the end" of the list, a phrasing that makes sense if you think about these functions as they are used recursively). `(listp xs)` is a recongizer for lists. `(true-listp xs)` is a stronger recognizer for lists that checks to see if the marker used for the empty list is `nil`, as it is in the system-created lists. Most ACL2 functions require (or only work with) "true" lists, like the ones you can construct with `(list ...)`. `(equal ...)` tests the equality of lists (or more simple elements). `(= ...)` only works for numbers.
+These functions relate to lists. `(endp xs)` checks to see if `xs` is an empty list (if we are "at the end" of the list, a phrasing that makes sense if you think about these functions as they are used recursively). `(listp xs)` is a recognizer for lists. `(true-listp xs)` is a stronger recognizer for lists that checks to see if the marker used for the empty list is `nil`, as it is in the system-created lists. Most ACL2 functions require (or only work with) "true" lists, like the ones you can construct with `(list ...)`. `(equal ...)` tests the equality of lists (or more simple elements). `(= ...)` only works for numbers.
 
 As a side note, I often use `xs` (or `ys`, `zs`, etc), pronounced like English plurals ("exes", "whys", "zees"), for lists and `x`, `y`, etc. for numbers or simple values. This is just a convention, not a part of Lisp.
 
@@ -59,7 +59,7 @@ By now, if you're an experienced programmer, you're probably expecting a way to 
 
 Instead, to produce meaningful or complex programs, you'll need to modify and return variables by creating new ones. This may seem unusual and may take some time to get accustomed to if you've never used an applicative programming language, but once you get the hang of it, it's pretty easy.
 
-Lets start with aliases. They are a good way to "save" the results of a complex computation and use it more than once, so you don't have to redo expensive operations. Alaiasing is done with the `let` function.
+Lets start with aliases. They are a good way to "save" the results of a complex computation and use it more than once, so you don't have to redo expensive operations. Aliasing is done with the `let` function.
 
     (let ((alias1 value1) (alias2 value2) ...) body)
 where the aliases are symbols (made up of letters, numbers, and/or some symbols) and the values are either literal values, or, more often, function calls.

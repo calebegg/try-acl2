@@ -84,7 +84,7 @@
 <h2>Lesson 1. Lisp</h2>
 <pre><code>(endp xs) (listp xs) (true-listp xs) (equal xs ys)
 </code></pre>
-<p>These functions relate to lists. <code>(endp xs)</code> checks to see if <code>xs</code> is an empty list (if we are "at the end" of the list, a phrasing that makes sense if you think about these functions as they are used recursively). <code>(listp xs)</code> is a recongizer for lists. <code>(true-listp xs)</code> is a stronger recognizer for lists that checks to see if the marker used for the empty list is <code>nil</code>, as it is in the system-created lists. Most ACL2 functions require (or only work with) "true" lists, like the ones you can construct with <code>(list ...)</code>. <code>(equal ...)</code> tests the equality of lists (or more simple elements). <code>(= ...)</code> only works for numbers.</p>
+<p>These functions relate to lists. <code>(endp xs)</code> checks to see if <code>xs</code> is an empty list (if we are "at the end" of the list, a phrasing that makes sense if you think about these functions as they are used recursively). <code>(listp xs)</code> is a recognizer for lists. <code>(true-listp xs)</code> is a stronger recognizer for lists that checks to see if the marker used for the empty list is <code>nil</code>, as it is in the system-created lists. Most ACL2 functions require (or only work with) "true" lists, like the ones you can construct with <code>(list ...)</code>. <code>(equal ...)</code> tests the equality of lists (or more simple elements). <code>(= ...)</code> only works for numbers.</p>
 <p>As a side note, I often use <code>xs</code> (or <code>ys</code>, <code>zs</code>, etc), pronounced like English plurals ("exes", "whys", "zees"), for lists and <code>x</code>, <code>y</code>, etc. for numbers or simple values. This is just a convention, not a part of Lisp.</p>
 <p>This time, try: <code>(true-listp '(a b c))</code> to verify what I asserted earlier.</p>
 </section>
@@ -92,7 +92,7 @@
 <h2>Lesson 1. Lisp</h2>
 <p>By now, if you're an experienced programmer, you're probably expecting a way to assign variables. However, one of the important parts of how ACL2 differs from regular Common Lisp is that it does not allow variables to be modified in place. In essence, it doesn't allow variables at all; only constants and aliases.</p>
 <p>Instead, to produce meaningful or complex programs, you'll need to modify and return variables by creating new ones. This may seem unusual and may take some time to get accustomed to if you've never used an applicative programming language, but once you get the hang of it, it's pretty easy.</p>
-<p>Lets start with aliases. They are a good way to "save" the results of a complex computation and use it more than once, so you don't have to redo expensive operations. Alaiasing is done with the <code>let</code> function.</p>
+<p>Lets start with aliases. They are a good way to "save" the results of a complex computation and use it more than once, so you don't have to redo expensive operations. Aliasing is done with the <code>let</code> function.</p>
 <pre><code>(let ((alias1 value1) (alias2 value2) ...) body)
 </code></pre>
 <p>where the aliases are symbols (made up of letters, numbers, and/or some symbols) and the values are either literal values, or, more often, function calls.</p>
@@ -193,9 +193,9 @@
 <input type="button" id="next" value="&gt;" />
 </article>
 <aside>
-  <p> <a href="http://www.cs.utexas.edu/~moore/acl2/">ACL2</a> is: <strong>A</strong> <strong>Compuational</strong>
+  <p> <a href="http://www.cs.utexas.edu/~moore/acl2/">ACL2</a> is: <strong>A</strong> <strong>Computational</strong>
 <strong>Logic</strong>: A complex mechanized theorem prover that can reason
-about code written in <strong>Applicitave</strong> <strong>Common</strong>
+about code written in <strong>Applicative</strong> <strong>Common</strong>
 <strong>Lisp</strong>: A significantly restricted subset of Common Lisp that
 doesn't allow for variables to be modified in place.</p>
 <p>
