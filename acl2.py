@@ -61,7 +61,7 @@ class ACL2(object):
     self.last_command_at = time.time()
     self.issue_form('(set-guard-checking :none)')
   def issue_form(self, form):
-    logger.debug("Entering issue_form")
+    logger.info("CODE: " + form)
     if self.closed:
       raise TerminatedException("Already terminated ACL2.")
     self.last_command_at = time.time()
