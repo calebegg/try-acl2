@@ -18,10 +18,13 @@ logging.basicConfig(format="[%(asctime)s | %(levelname)s]: %(message)s",
                     filename="handler.log",
                     level=logging.DEBUG)
 logger = logging.getLogger("acl2-handler")
+
 a = {}
 acl2_queue = [acl2.ACL2() for i in range(INITIAL_ACL2_COUNT)]
 acl2_queue_semaphore = Semaphore(INITIAL_ACL2_COUNT)
 acl2_queue_lock = Lock()
+
+cherrypy.config.update({'server.socket_port': 80 if os.getuid() == 0 else 8000})
 
 def remove_old_instances():
   logger.debug("Removing old instances.")
