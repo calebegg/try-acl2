@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from subprocess import Popen, PIPE
-from threading import Thread
+from threading import Thread, Timer
 from Queue import Queue, Empty
 import logging
 import re
@@ -87,6 +87,8 @@ class ACL2(object):
       try:
         char = self.out_q.get(timeout=5)
       except Empty:
+        self.ins.write('(good-bye)\n')
+        Timer(20.0, lambda: self.acl2.kill()).start()
         raise TerminatedException("ACL2 took too long to respond")
       buff.pop(0)
       buff.append(char)
