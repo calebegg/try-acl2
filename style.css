@@ -186,6 +186,12 @@ strong:first-letter {
 section {
   overflow: hidden;
 }
+.share-buttons {
+  text-align: center;
+}
+.share-buttons > iframe, .share-buttons > div {
+  vertical-align: middle !important;
+}
 @media screen and (min-width: 800px) and (max-width: 1200px) {
   body {
     width: 98% !important;
