@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
 from subprocess import Popen, PIPE
+from threading import Thread
+from Queue import Queue, Empty
 import logging
 import re
 import sys
@@ -37,15 +39,24 @@ def check_none_in_blacklist(code, top_level=True):
         raise BlacklistException(term + " is not allowed here for security " +
             "reasons. Download ACL2 to try this feature.")
     else:
-      raise BlacklistException("Encountered an unknown problem processing " + str(term) + " of type " + str(type(term)))
+      raise BlacklistException("Encountered an unknown problem processing " +
+          str(term) + " of type " + str(type(term)))
 
 class ACL2(object):
+  # This method is from:
+  # http://stackoverflow.com/questions/375427/non-blocking-read-on-a-subprocess-pipe-in-python
+  def enqueue_output(self, out):
+    while True:
+      self.out_q.put(out.read(1))
   def __init__(self):
     self.closed = False
-    self.acl2 = Popen('../acl2/run_acl2', shell=True,
-        stdin=PIPE, stdout=PIPE)
+    self.acl2 = Popen('../acl2/run_acl2', shell=True, stdin=PIPE, stdout=PIPE,
+        bufsize=1, close_fds=True)
     self.ins = self.acl2.stdin
-    self.out = self.acl2.stdout
+    self.out_q = Queue()
+    t = Thread(target=ACL2.enqueue_output, args=(self, self.acl2.stdout))
+    t.daemon = True
+    t.start()
     self.expect_prompts = 1
     self.last_command_at = time.time()
     self.issue_form('(set-guard-checking :none)')
@@ -73,7 +84,10 @@ class ACL2(object):
     logger.debug("Writing to ACL2, waiting for {0} prompts"
                     .format(self.expect_prompts))
     while self.expect_prompts > 0:
-      char = self.out.read(1)
+      try:
+        char = self.out_q.get(timeout=5)
+      except Empty:
+        raise TerminatedException("ACL2 took too long to respond")
       buff.pop(0)
       buff.append(char)
       if (buff == ['\n', 'A', 'C', 'L', '2', ' ', '!', '>'] or
