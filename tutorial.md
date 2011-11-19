@@ -93,7 +93,7 @@ Next, we're going to enter a recursive function; `factorial`. The factorial of a
     (defun factorial-wrong (n)
       (if (= n 0)
           1
-          (* n (factorial (- n 1)))))
+          (* n (factorial-wrong (- n 1)))))
 
 You can try adding this to ACL2, but it won't work. To see what's wrong, imagine calling factorial on the (perfectly valid) ACL2 number `-1`.
 
