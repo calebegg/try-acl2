@@ -46,11 +46,8 @@ class ACL2(object):
   # This method is from:
   # http://stackoverflow.com/questions/375427/non-blocking-read-on-a-subprocess-pipe-in-python
   def enqueue_output(self, out):
-    try:
-      while True:
-        self.out_q.put(out.read(1))
-    except:
-      pass
+    while True:
+      self.out_q.put(out.read(1))
   def __init__(self):
     self.closed = False
     self.acl2 = Popen('../acl2/run_acl2', shell=True, stdin=PIPE, stdout=PIPE,
@@ -119,7 +116,7 @@ class ACL2(object):
     self.acl2.communicate()
     self.closed = True
   def __del__(self):
-    if not self.closed and hasattr(self, 'acl2'):
+    if not self.closed:
       self.close()
 
 if __name__ == '__main__':
