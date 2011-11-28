@@ -124,44 +124,101 @@ Now let's try defining a function on lists; `rev`, which reverses the list you g
 
 Lesson 3. Theorems
 -----------------
-Of course, proving that functions terminate is only a small part of proving that they work. ACL2 also lets you prove arbitrary theorems about functions. We will start out using the `(thm ...)` function to do this. Try the following pretty obvious theorem: If a number is a natural number, that number is also an integer; `(thm (implies (natp i) (integerp i)))`
+Of course, proving that functions terminate is only a small part of proving that they work. ACL2 also lets you prove arbitrary theorems about functions. We will start out using the `(thm ...)` function to do this. Try the following pretty obvious theorem: If a number is a natural number, that number is also an integer; `(thm (= (+ a b) (+ b a)))`
 
+Lesson 3. Theorems
+------------------
+The proof for that theorem isn't very interesting. ACL2 just applies the built-in knowledge it has of linear arithmetic. How about a theorem about our previously-defined factorial function:
+    (thm (> (factorial n) 0))
+
+Lesson 3. Theorems
+------------------
+Again, a relatively simple proof. For this one, ACL2 uses the fact that when it admitted `factorial`, it determined that the result was always a positive integer and stored that as a `:type-prescription` rule.
+
+Let's prove that the built in `append` function from earlier is associative; that is, `(append (append xs ys) zs)` equals `(append xs (append ys zs))`. Remember that to show that lists are equal, use `equal`, not `=`, which is just for numbers.
+    (thm (equal (append (append xs ys) zs) (append xs (append ys zs))))
+
+
+Lesson 3. Theorems
+------------------
+This is a long, (but interesting!) proof. If you're interested in the details, there's a good, relatively non-technical discussion of this proof by the authors of ACL2 [here](http://www.cs.utexas.edu/~moore/acl2/current/The_Proof_of_the_Associativity_of_App.html).
+
+For theorems that ACL2 can't prove on its own, you'll often have to provide lemmas; theorems that are added to the ACL2 logical world and can then be used in proving future theorems. To add a theorem to the logical world, use `(defthm ...` and give it a name.
+
+    (defthm append-associative
+      (equal (append (append xs ys) zs)
+             (append xs (append ys zs))))
+
+Lesson 3. Theorems
+------------------
+Theorems added using this method
+must be written with care; the prover blindly replaces the left side with the right side whenever it finds something that looks like the left side and can prove all of the `implies` hypotheses. If we admitted a different version of append-associative that converted `(append xs (append ys zs))` to `(append (append xs ys))`, the theorem prover would loop forever, applying these two rules repeatedly.
+
+A final easy theorem before we move on to more difficult theorems is that reversing a list twice yields the original list.
+
+The proof of this one is also interesting. In proving rev-rev, the prover identifies the need for a simpler lemma, namely, that `(rev (append xs (list x)))` equals `(cons x (rev xs))`, and proves it using a second induction.
+
+    (defthm rev-rev
+      (implies (true-listp xs)
+               (equal (rev (rev xs)) xs)))
+               
 This tutorial is a work in progress
 -----------------------------------
 Feel free to email any comments you have to me at calebegg@gmail.com, and come back for more later.
 
 <!--
-  (thm (= (+ a b) (+ b a)))
-  (thm (= (* a 2) (+ a a)))
-  (thm (> (factorial n) 0))
-  (equal ...)
-  (thm (equal (append (append xs ys) zs) (append xs (append ys zs))))
-  (defthm name ...)
-  :rewrite rules
-3. Harder theorems
-  (defun rev ...)
-  (defthm rev-rev ...)
+Lesson 4. Harder theorems
+-------------------------
   (defun exp (b n) ...)
+Define an expoential function, `(exp ...)`. `(exp b n)` is b^n.
+
+`(exp b 0)` is 1 and `(exp b n)` is `b` times `(exp b (- n 1))`. 
+
   (defun rp (b n) ...)
+A faster exponential algorithm is called the Russian Peasant algorithm. It works like this: If `n` is zero, return 1 as before. Otherwise, if `n` even, return `(exp (square b) (/ n 2))`. If `n` is odd, multiply `b` by `(exp (square b) k)` where `k` is the whole number part of `(/ n 2)` which can be computed using `(floor n 2)`. Call the new function `(rp b n)`.
+
   (defthm rp-equals-exp ...)
+You could test out `(rp ...)` for several values to demonstrate that it returns the same result, but instead let's prove that they always return the same result.
+
+    (defthm rp=exp
+      (= (rp b n) (exp b n)))
+
   (defun orderedp (xs) ...)
   (defun partial-sums (xs running) ...)
   (defthm partial-sums-ordered (orderedp (partial-sums xs 0)))
-4. Tail recursion
+Lesson 5. Tail recursion
+------------------------
   (defun fact-tail (n r) ...)
   (defun sum (xs) ...)
-  (defthm xs-over-append ...)
+  (defthm sum-over-append ...)
   (defun running-sum (xs r) ...)
   (defthm sum=rumming-sum ...)
-5. Sorting
+Lesson 6. Sorting
+-----------------
   (defun insert (x xs) ...)
   (defthm (implies (orderedp xs)) (orderedp (insert x xs)))
   (defun isort (xs) ...)
   (defthm (orderedp (isort xs)))
   (defun split (xs) ...)
+For merge sort, we need a way to split a list in half. With arrays, we would divide the length in half, but linked lists, that would be a slow operation. Instead, we'll split the list in half by dividing it up into two lists, two elements at a time.
+
+    (defun split (xs)
+      (if (endp (rest xs))
+          xs
+          (cons (first xs)
+                (cons (second xs)
+                      (rest (rest xs))))))
+
   (defthm split-halves-list ...)
   (defun merge (xs ys) ...)
+Merge sort depends on the linear-time merge algorithm, which takes two sorted lists and merges them into a list that's also sorted. The algorithm works like this: (a) `(merge xs nil)` is xs, and `(merge nil ys)` is ys. (b) `(merge (cons x xs) (cons y ys))` is `(cons x (cons y (merge xs ys)))` if x is less than y, and `(cons y (cons x (merge xs ys)))` otherwise.
+
+One other thing you need to know before writing `merge` is that ACL2 will need a little help understanding this more complex recursion. ACL2 proves that functions terminate using a `:measure`. The simplest form of `:measure` is a natural number. The `:measure` must be a quantity that decreases with each recursive call. In this case, you can use `(+ (len xs) (len ys))`.
+  
+Write an algorithm for merge.
+
   (defthm (implies (and (orderedp xs) (orderedp ys)) (orderedp (merge xs ys))))
   Qsort
-6. I/O
+Lesson 7. I/O
+-------------
 -->
