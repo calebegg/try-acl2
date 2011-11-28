@@ -134,34 +134,71 @@ Feel free to email any comments you have to me at calebegg@gmail.com, and come b
   (thm (= (+ a b) (+ b a)))
   (thm (= (* a 2) (+ a a)))
   (thm (> (factorial n) 0))
-  (equal ...)
   (thm (equal (append (append xs ys) zs) (append xs (append ys zs))))
+Let's prove that the built in `append` function from earlier is associative; that is, `(append (append xs ys) zs)` equals `(append xs (append ys zs))`. Remember that to show that lists are equal, use `equal`, not `=`, which is just for numbers.
   (defthm name ...)
-  :rewrite rules
-3. Harder theorems
-  (defun rev ...)
+For theorems that ACL2 can't prove on its own, you'll often have to provide lemmas; theorems that are added to the ACL2 logical world and can then be used in proving future theorems. To add a theorem to the logical world, use `(defthm ...` and give it a name.
+
+    (defthm append-associative
+      (equal (append (append xs ys) zs)
+             (append xs (append ys zs))))
+
+  rewrite rules
+Lesson 4. Harder theorems
+-------------------------
   (defthm rev-rev ...)
+    (defthm rev-rev
+      (equal (rev (rev xs)) xs))
   (defun exp (b n) ...)
+Define an expoential function, `(exp ...)`. `(exp b n)` is b^n.
+
+`(exp b 0)` is 1 and `(exp b n)` is `b` times `(exp b (- n 1))`. 
+
   (defun rp (b n) ...)
+A faster exponential algorithm is called the Russian Peasant algorithm. It works like this: If `n` is zero, return 1 as before. Otherwise, if `n` even, return `(exp (square b) (/ n 2))`. If `n` is odd, multiply `b` by `(exp (square b) k)` where `k` is the whole number part of `(/ n 2)` which can be computed using `(floor n 2)`. Call the new function `(rp b n)`.
+
   (defthm rp-equals-exp ...)
+You could test out `(rp ...)` for several values to demonstrate that it returns the same result, but instead let's prove that they always return the same result.
+
+    (defthm rp=exp
+      (= (rp b n) (exp b n)))
+
   (defun orderedp (xs) ...)
   (defun partial-sums (xs running) ...)
   (defthm partial-sums-ordered (orderedp (partial-sums xs 0)))
-4. Tail recursion
+Lesson 5. Tail recursion
+------------------------
   (defun fact-tail (n r) ...)
   (defun sum (xs) ...)
-  (defthm xs-over-append ...)
+  (defthm sum-over-append ...)
   (defun running-sum (xs r) ...)
   (defthm sum=rumming-sum ...)
-5. Sorting
+Lesson 6. Sorting
+-----------------
   (defun insert (x xs) ...)
   (defthm (implies (orderedp xs)) (orderedp (insert x xs)))
   (defun isort (xs) ...)
   (defthm (orderedp (isort xs)))
   (defun split (xs) ...)
+For merge sort, we need a way to split a list in half. With arrays, we would divide the length in half, but linked lists, that would be a slow operation. Instead, we'll split the list in half by dividing it up into two lists, two elements at a time.
+
+    (defun split (xs)
+      (if (endp (rest xs))
+          xs
+          (cons (first xs)
+                (cons (second xs)
+                      (rest (rest xs))))))
+
   (defthm split-halves-list ...)
   (defun merge (xs ys) ...)
+Merge sort depends on the linear-time merge algorithm, which takes two sorted lists and merges them into a list that's also sorted. The algorithm works like this: (a) `(merge xs nil)` is xs, and `(merge nil ys)` is ys. (b) `(merge (cons x xs) (cons y ys))` is `(cons x (cons y (merge xs ys)))` if x is less than y, and `(cons y (cons x (merge xs ys)))` otherwise.
+
+One other thing you need to know before writing `merge` is that ACL2 will need a little help understanding this more complex recursion. ACL2 proves that functions terminate using a `:measure`. The simplest form of `:measure` is a natural number. The `:measure` must be a quantity that decreases with each recursive call. In this case, you can use `(+ (len xs) (len ys))`.
+  
+Write an algorithm for merge.
+
   (defthm (implies (and (orderedp xs) (orderedp ys)) (orderedp (merge xs ys))))
   Qsort
-6. I/O
+Lesson 7. I/O
+-------------
 -->
