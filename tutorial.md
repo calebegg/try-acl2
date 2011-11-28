@@ -129,6 +129,7 @@ Of course, proving that functions terminate is only a small part of proving that
 Lesson 3. Theorems
 ------------------
 The proof for that theorem isn't very interesting. ACL2 just applies the built-in knowledge it has of linear arithmetic. How about a theorem about our previously-defined factorial function:
+
     (thm (> (factorial n) 0))
 
 Lesson 3. Theorems
@@ -136,14 +137,14 @@ Lesson 3. Theorems
 Again, a relatively simple proof. For this one, ACL2 uses the fact that when it admitted `factorial`, it determined that the result was always a positive integer and stored that as a `:type-prescription` rule.
 
 Let's prove that the built in `append` function from earlier is associative; that is, `(append (append xs ys) zs)` equals `(append xs (append ys zs))`. Remember that to show that lists are equal, use `equal`, not `=`, which is just for numbers.
-    (thm (equal (append (append xs ys) zs) (append xs (append ys zs))))
 
+    (thm (equal (append (append xs ys) zs) (append xs (append ys zs))))
 
 Lesson 3. Theorems
 ------------------
 This is a long, (but interesting!) proof. If you're interested in the details, there's a good, relatively non-technical discussion of this proof by the authors of ACL2 [here](http://www.cs.utexas.edu/~moore/acl2/current/The_Proof_of_the_Associativity_of_App.html).
 
-For theorems that ACL2 can't prove on its own, you'll often have to provide lemmas; theorems that are added to the ACL2 logical world and can then be used in proving future theorems. To add a theorem to the logical world, use `(defthm ...` and give it a name.
+For theorems that ACL2 can't prove on its own, you'll often have to provide lemmas; theorems that are added to the ACL2 logical world and can then be used in proving future theorems. To add a theorem to the logical world, use `(defthm ...)` and give it a name.
 
     (defthm append-associative
       (equal (append (append xs ys) zs)
