@@ -124,31 +124,51 @@ Now let's try defining a function on lists; `rev`, which reverses the list you g
 
 Lesson 3. Theorems
 -----------------
-Of course, proving that functions terminate is only a small part of proving that they work. ACL2 also lets you prove arbitrary theorems about functions. We will start out using the `(thm ...)` function to do this. Try the following pretty obvious theorem: If a number is a natural number, that number is also an integer; `(thm (implies (natp i) (integerp i)))`
+Of course, proving that functions terminate is only a small part of proving that they work. ACL2 also lets you prove arbitrary theorems about functions. We will start out using the `(thm ...)` function to do this. Try the following pretty obvious theorem: If a number is a natural number, that number is also an integer; `(thm (= (+ a b) (+ b a)))`
 
-This tutorial is a work in progress
------------------------------------
-Feel free to email any comments you have to me at calebegg@gmail.com, and come back for more later.
+Lesson 3. Theorems
+------------------
+The proof for that theorem isn't very interesting. ACL2 just applies the built-in knowledge it has of linear arithmetic. How about a theorem about our previously-defined factorial function:
+    (thm (> (factorial n) 0))
 
-<!--
-  (thm (= (+ a b) (+ b a)))
-  (thm (= (* a 2) (+ a a)))
-  (thm (> (factorial n) 0))
-  (thm (equal (append (append xs ys) zs) (append xs (append ys zs))))
+Lesson 3. Theorems
+------------------
+Again, a relatively simple proof. For this one, ACL2 uses the fact that when it admitted `factorial`, it determined that the result was always a positive integer and stored that as a `:type-prescription` rule.
+
 Let's prove that the built in `append` function from earlier is associative; that is, `(append (append xs ys) zs)` equals `(append xs (append ys zs))`. Remember that to show that lists are equal, use `equal`, not `=`, which is just for numbers.
-  (defthm name ...)
+    (thm (equal (append (append xs ys) zs) (append xs (append ys zs))))
+
+
+Lesson 3. Theorems
+------------------
+This is a long, (but interesting!) proof. If you're interested in the details, there's a good, relatively non-technical discussion of this proof by the authors of ACL2 [here](http://www.cs.utexas.edu/~moore/acl2/current/The_Proof_of_the_Associativity_of_App.html).
+
 For theorems that ACL2 can't prove on its own, you'll often have to provide lemmas; theorems that are added to the ACL2 logical world and can then be used in proving future theorems. To add a theorem to the logical world, use `(defthm ...` and give it a name.
 
     (defthm append-associative
       (equal (append (append xs ys) zs)
              (append xs (append ys zs))))
 
-  rewrite rules
+Lesson 3. Theorems
+------------------
+Theorems added using this method
+must be written with care; the prover blindly replaces the left side with the right side whenever it finds something that looks like the left side and can prove all of the `implies` hypotheses. If we admitted a different version of append-associative that converted `(append xs (append ys zs))` to `(append (append xs ys))`, the theorem prover would loop forever, applying these two rules repeatedly.
+
+A final easy theorem before we move on to more difficult theorems is that reversing a list twice yields the original list.
+
+The proof of this one is also interesting. In proving rev-rev, the prover identifies the need for a simpler lemma, namely, that `(rev (append xs (list x)))` equals `(cons x (rev xs))`, and proves it using a second induction.
+
+    (defthm rev-rev
+      (implies (true-listp xs)
+               (equal (rev (rev xs)) xs)))
+               
+This tutorial is a work in progress
+-----------------------------------
+Feel free to email any comments you have to me at calebegg@gmail.com, and come back for more later.
+
+<!--
 Lesson 4. Harder theorems
 -------------------------
-  (defthm rev-rev ...)
-    (defthm rev-rev
-      (equal (rev (rev xs)) xs))
   (defun exp (b n) ...)
 Define an expoential function, `(exp ...)`. `(exp b n)` is b^n.
 
