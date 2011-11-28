@@ -44,6 +44,7 @@
   <div id="jq-console"></div>
 </div>
 <article>
+</section>
 <section>
 <h2>Lesson 1. Lisp</h2>
 <p>ACL2 uses a subset of the Lisp programming language. Lisp syntax is one of the simplest ones of any programming language. However, it is different from most other languages, so let's take a moment to get acquainted with it.</p>
@@ -153,19 +154,21 @@
 </section>
 <section>
 <h2>Lesson 3. Theorems</h2>
-<p>The proof for that theorem isn't very interesting. ACL2 just applies the built-in knowledge it has of linear arithmetic. How about a theorem about our previously-defined factorial function:
-    (thm (&gt; (factorial n) 0))</p>
+<p>The proof for that theorem isn't very interesting. ACL2 just applies the built-in knowledge it has of linear arithmetic. How about a theorem about our previously-defined factorial function:</p>
+<pre><code>(thm (&gt; (factorial n) 0))
+</code></pre>
 </section>
 <section>
 <h2>Lesson 3. Theorems</h2>
 <p>Again, a relatively simple proof. For this one, ACL2 uses the fact that when it admitted <code>factorial</code>, it determined that the result was always a positive integer and stored that as a <code>:type-prescription</code> rule.</p>
-<p>Let's prove that the built in <code>append</code> function from earlier is associative; that is, <code>(append (append xs ys) zs)</code> equals <code>(append xs (append ys zs))</code>. Remember that to show that lists are equal, use <code>equal</code>, not <code>=</code>, which is just for numbers.
-    (thm (equal (append (append xs ys) zs) (append xs (append ys zs))))</p>
+<p>Let's prove that the built in <code>append</code> function from earlier is associative; that is, <code>(append (append xs ys) zs)</code> equals <code>(append xs (append ys zs))</code>. Remember that to show that lists are equal, use <code>equal</code>, not <code>=</code>, which is just for numbers.</p>
+<pre><code>(thm (equal (append (append xs ys) zs) (append xs (append ys zs))))
+</code></pre>
 </section>
 <section>
 <h2>Lesson 3. Theorems</h2>
 <p>This is a long, (but interesting!) proof. If you're interested in the details, there's a good, relatively non-technical discussion of this proof by the authors of ACL2 <a href="http://www.cs.utexas.edu/~moore/acl2/current/The_Proof_of_the_Associativity_of_App.html">here</a>.</p>
-<p>For theorems that ACL2 can't prove on its own, you'll often have to provide lemmas; theorems that are added to the ACL2 logical world and can then be used in proving future theorems. To add a theorem to the logical world, use <code>(defthm ...</code> and give it a name.</p>
+<p>For theorems that ACL2 can't prove on its own, you'll often have to provide lemmas; theorems that are added to the ACL2 logical world and can then be used in proving future theorems. To add a theorem to the logical world, use <code>(defthm ...)</code> and give it a name.</p>
 <pre><code>(defthm append-associative
   (equal (append (append xs ys) zs)
          (append xs (append ys zs))))
