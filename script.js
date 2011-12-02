@@ -1,4 +1,3 @@
-window.onresize = on_resize;
 sid = Math.random();
 current_section = 0;
 function on_resize() {
@@ -13,14 +12,21 @@ function on_resize() {
   info.css('right', pre_width - info.width() - 35 + 'px');
   jq_console.height(outer_console.height() - $('h1').height() - 10);
 }
+window.onresize = on_resize;
 opacity = 0;
 function showPrevSection() {
   if (current_section === 0) {
     return;
   } else {
-    sections.eq(current_section).hide();
+    current = sections.eq(current_section);
+    current.hide();
     current_section--;
-    sections.eq(current_section).show();
+    current = sections.eq(current_section);
+    current.show();
+    if (current.parent().is(':hidden')) {
+      $('article:visible').hide()
+      current.parent().show()
+    }
   }
 }
 function showNextSection() {
@@ -29,7 +35,12 @@ function showNextSection() {
   } else {
     sections.eq(current_section).hide();
     current_section++;
-    sections.eq(current_section).show();
+    current = sections.eq(current_section);
+    current.show();
+    if (current.parent().is(':hidden')) {
+      $('article:visible').hide()
+      current.parent().show()
+    }
   }
 }
 function main() {
@@ -39,13 +50,13 @@ function main() {
   console_inner = $('.jquery-console-inner');
   pre = $('#ref');
   body = $('body');
-  tutorial = $('article');
+  tutorial = $('#tutorial');
   info = $('aside');
-  sections = $('section');
-  throbber = $('#throbber');
+  articles = $('#tutorial article');
+  sections = $('#tutorial article section');
   on_resize();
   // Set up tutorial
-  sections.hide();
+  articles.eq(0).show();
   sections.eq(0).show();
   $('#prev').click(showPrevSection);
   $('#next').click(showNextSection);
@@ -77,7 +88,6 @@ function main() {
       },
       commandHandle: function(line, report) {
         paren_count = parens_match(line);
-        console.log('Line: ' + line);
         if (paren_count > 0) {
           controller.continuedPrompt = true;
           indent = '';
@@ -91,7 +101,7 @@ function main() {
           report([{msg:"Unmatched ')'", className:"error"}]);
           return;
         }
-        throbber.show();
+        show_throbber();
         controller.continuedPrompt = false;
         $.get('', {code: line, sid: sid}, function(data) {
           data = data.trim();
@@ -115,7 +125,7 @@ function main() {
             report(data);
           }
           jq_console.css('opacity', '1');
-          throbber.hide();
+          hide_throbber();
           outer_console_elem = outer_console[0];
           outer_console_elem.scrollTop = outer_console_elem.scrollHeight;
         });
@@ -127,6 +137,12 @@ function main() {
       controller.inner.click();
     });
   });
+}
+function show_throbber() {
+  jq_console.css('background', 'url("/throbber.gif") no-repeat center bottom');
+}
+function hide_throbber() {
+  jq_console.css('background', '');
 }
 $(main);
 function parens_match(line) {

@@ -50,8 +50,11 @@ h1 {
 }
 h2 {
   font-size: 24px;
-  padding-bottom: 2px;
   border-bottom: solid 1px rgba(0, 0, 0, .4);
+  /* prev/next buttons */
+  min-height: 30px; 
+  padding: 2px 57px 2px 77px;
+  text-align: center;
 }
 body {
   font-size: 14px;
@@ -60,7 +63,7 @@ body {
   width: 1150px;
   margin: 10px auto;
 }
-#console, article, aside {
+#console, #tutorial, aside {
   border-radius: 3px;
   padding: 5px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, .2);
@@ -104,15 +107,17 @@ code {
   word-wrap: break-word;
   cursor: pointer;
 }
-article {
+#tutorial {
   position: absolute;
   left: 0;
   top: 20px;
   width: 520px;
   padding-right: 25px;
-  padding-bottom: 40px !important; /* prev/next */
   background: #C9E29F;
   min-height: 400px;
+}
+article, section {
+  display: none;
 }
 aside {
   background: #94C740;
@@ -133,7 +138,7 @@ footer {
 }
 #prev, #next {
   position: absolute;
-  bottom: 5px;
+  top: 5px;
   height: 30px;
   border-radius: 3px;
   border: 0;
@@ -150,22 +155,16 @@ footer {
   background: #a9c27f;
 }
 #prev {
-  left: 25%;
+  left: 5px;
 }
 #next {
-  right: 25%;
+  right: 25px;
 }
 .jquery-console-cursor {
   border: solid black 1px;
 }
 .jquery-console-focus .jquery-console-cursor {
   background: black;
-}
-#throbber {
-  display: none;
-  position: absolute;
-  top: 5px;
-  right: 5px;
 }
 .collapse {
   padding-left: 10px;
@@ -223,7 +222,7 @@ section {
   #console {
     height: 200px;
   }
-  #console, aside, article {
+  #console, aside, #tutorial {
     position: relative !important;
     top: 0;
     left: 0;
