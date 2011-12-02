@@ -43,81 +43,72 @@
   <div id="throbber"><img src="throbber.gif" /></div>
   <div id="jq-console"></div>
 </div>
-<article>
-<section>
-<h2>Lesson 1. Lisp</h2>
-<p>ACL2 uses a subset of the Lisp programming language. Lisp syntax is one of the simplest ones of any programming language. However, it is different from most other languages, so let's take a moment to get acquainted with it.</p>
+<div id="tutorial">
+<article><h2>Lesson 1. Lisp</h2>
+<p><section>
+ACL2 uses a subset of the Lisp programming language. Lisp syntax is one of the simplest ones of any programming language. However, it is different from most other languages, so let's take a moment to get acquainted with it.</p>
 <p>First of all, every operation in Lisp is a function. Even very basic mathematical operations, such as addition. Secondly, functions are called in a different way than they are in mathematics or in most other languages. While in most languages, you might write <code>f(x, y)</code>, in Lisp, you write <code>(f x y)</code>.</p>
 <p>The addition function is called <code>+</code>. Try adding two numbers now: <code>(+ 1 2)</code></p>
-<p><em>Tip: You can click on any code you see in this tutorial to insert it at the prompt.</em></p>
-</section>
-<section>
-<h2>Lesson 1. Lisp</h2>
-<p>'Lisp' is short for 'list processing'. Lists, specifically <a href="http://en.wikipedia.org/wiki/Linked_list">linked lists</a>, are a fundamental part of how Lisp represents and manipulates data. The function used to create a list is called, appropriately, <code>list</code>. Try creating a list: <code>(list 8 6 7 5 3 0 9)</code></p>
-</section>
-<section>
-<h2>Lesson 1. Lisp</h2>
-<p>You can use the single quote mark as a type of shorthand for creating lists. Unlike with <code>(list ...)</code>, the single quote marker also "quotes" the items inside of it. While <code>(list 1 2 (+ 1 2))</code> would be the same as <code>(list 1 2 3)</code>, <code>'(1 2 (+ 1 2))</code> is the same as <code>(list 1 2 (list '+ 1 2))</code>.</p>
-<p>The single quoted + sign, <code>'+</code> is called a "symbol". You can use the single quote to create a symbol out of any simple sequence of characters, such as <code>'not-found</code>, <code>'valid</code>, or `'1+1.</p>
-<p><code>append</code> concatenates two (or more) lists together. Try: <code>(append '(1 2 3) '(4 5 6))</code></p>
-</section>
-<section>
-<h2>Lesson 1. Lisp</h2>
-<p>There are two more basic types of values in ACL2 that are important: strings and booleans. Strings are double quoted, <code>"like this"</code>. The two boolean values are <code>t</code> (for true) and <code>nil</code> (for false). Actually, any value (except <code>nil</code>) is considered to be true for boolean tests. Use <code>t</code> if no other value makes more sense.</p>
+<p><em>Tip: You can click on any code you see in this tutorial to insert it at the prompt.</em>
+</section></p>
+<p><section>
+'Lisp' is short for 'list processing'. Lists, specifically <a href="http://en.wikipedia.org/wiki/Linked_list">linked lists</a>, are a fundamental part of how Lisp represents and manipulates data. The function used to create a list is called, appropriately, <code>list</code>. Try creating a list: <code>(list 8 6 7 5 3 0 9)</code>
+</section></p>
+<p><section>
+You can use the single quote mark as a type of shorthand for creating lists. Unlike with <code>(list ...)</code>, the single quote marker also "quotes" the items inside of it. While <code>(list 1 2 (+ 1 2))</code> would be the same as <code>(list 1 2 3)</code>, <code>'(1 2 (+ 1 2))</code> is the same as <code>(list 1 2 (list '+ 1 2))</code>.</p>
+<p>The single quoted + sign, <code>'+</code> is called a "symbol". You can use the single quote to create a symbol out of any simple sequence of characters, such as <code>'not-found</code>, <code>'valid</code>, or <code>'1+1</code>.</p>
+<p><code>append</code> concatenates two (or more) lists together. Try: <code>(append '(1 2 3) '(4 5 6))</code>
+</section></p>
+<p><section>
+There are two more basic types of values in ACL2 that are important: strings and booleans. Strings are double quoted, <code>"like this"</code>. The two boolean values are <code>t</code> (for true) and <code>nil</code> (for false). Actually, any value (except <code>nil</code>) is considered to be true for boolean tests. Use <code>t</code> if no other value makes more sense.</p>
 <p>The primary use for boolean functions and values is to branch using the <code>(if ...)</code> function.</p>
-<p>Usage:
-    (if test if-true if-false)</p>
-<p>Try it now with one of the simple boolean values: <code>(if t "True" "False")</code></p>
-</section>
-<section>
-<h2>Lesson 1. Lisp</h2>
-<p>Of course, <code>(if ...)</code> doesn't do much good in this form. You'll almost always call (if ...) with a function call for the second parameter. Some functions that return boolean values:</p>
+<p>Usage: <code>(if test if-true if-false)</code></p>
+<p>Try it now with one of the simple boolean values: <code>(if t "True" "False")</code>
+</section></p>
+<p><section>
+Of course, <code>(if ...)</code> doesn't do much good in this form. You'll almost always call (if ...) with a function call for the second parameter. Some functions that return boolean values:</p>
 <pre><code>(&lt; a b) (&gt; a b) (&lt;= a b) (&gt;= a b) (= a b) (/= a b)
 </code></pre>
 <p>These are the six equality and inequality tests. They should be familiar to you. The final one is 'not equal'; the slash is meant to signify the crossed out equal sign of mathematics.</p>
 <pre><code>(integerp x) (rationalp x) (acl2-numberp x) (complex-rationalp x) (natp x)
 </code></pre>
 <p>These functions recognize (return <code>t</code>) some of the different types of numbers available in ACL2. The terminal '<code>p</code>' is a common idiom from Lisp and means "predicate". You can imagine it as a sort of question mark; <code>(natp i)</code> means "Is <code>i</code> an natural number?".</p>
-<p>Try this: <code>(if (= (+ 1 3) (+ 5 2 -3)) "Equal" "Not equal")</code></p>
-</section>
+<p>Try this: <code>(if (= (+ 1 3) (+ 5 2 -3)) "Equal" "Not equal")</code>
+</section></p>
 <section>
-<h2>Lesson 1. Lisp</h2>
+
 <pre><code>(endp xs) (listp xs) (true-listp xs) (equal xs ys)
 </code></pre>
 <p>These functions relate to lists. <code>(endp xs)</code> checks to see if <code>xs</code> is an empty list (if we are "at the end" of the list, a phrasing that makes sense if you think about these functions as they are used recursively). <code>(listp xs)</code> is a recognizer for lists. <code>(true-listp xs)</code> is a stronger recognizer for lists that checks to see if the marker used for the empty list is <code>nil</code>, as it is in the system-created lists. Most ACL2 functions require (or only work with) "true" lists, like the ones you can construct with <code>(list ...)</code>. <code>(equal ...)</code> tests the equality of lists (or more simple elements). <code>(= ...)</code> only works for numbers.</p>
 <p>As a side note, I often use <code>xs</code> (or <code>ys</code>, <code>zs</code>, etc), pronounced like English plurals ("exes", "whys", "zees"), for lists and <code>x</code>, <code>y</code>, etc. for numbers or simple values. This is just a convention, not a part of Lisp.</p>
-<p>This time, try: <code>(true-listp '(a b c))</code> to verify what I asserted earlier.</p>
-</section>
-<section>
-<h2>Lesson 1. Lisp</h2>
-<p>By now, if you're an experienced programmer, you're probably expecting a way to assign variables. However, one of the important parts of how ACL2 differs from regular Common Lisp is that it does not allow variables to be modified in place. In essence, it doesn't allow variables at all; only constants and aliases.</p>
+<p>This time, try: <code>(true-listp '(a b c))</code> to verify what I asserted earlier.
+</section></p>
+<p><section>
+By now, if you're an experienced programmer, you're probably expecting a way to assign variables. However, one of the important parts of how ACL2 differs from regular Common Lisp is that it does not allow variables to be modified in place. In essence, it doesn't allow variables at all; only constants and aliases.</p>
 <p>Instead, to produce meaningful or complex programs, you'll need to modify and return variables by creating new ones. This may seem unusual and may take some time to get accustomed to if you've never used an applicative programming language, but once you get the hang of it, it's pretty easy.</p>
 <p>Lets start with aliases. They are a good way to "save" the results of a complex computation and use it more than once, so you don't have to redo expensive operations. Aliasing is done with the <code>let</code> function.</p>
 <pre><code>(let ((alias1 value1) (alias2 value2) ...) body)
 </code></pre>
 <p>where the aliases are symbols (made up of letters, numbers, and/or some symbols) and the values are either literal values, or, more often, function calls.</p>
-<p>Try this: <code>(let ((xs (append '(1 2 3) '(4 5 6)))) (and (listp xs) (true-listp xs)))</code></p>
-</section>
-<section>
-<h2>Lesson 1. Lisp</h2>
-<p>In the previous example, I snuck in an extra simple function: <code>(and ...)</code>. It does what you'd expect from boolean algebra, and you can also use <code>(or ...)</code>, <code>(not ...)</code>, <code>(implies p q)</code>, etc.</p>
-<p>There's one final important built-in function that I'd like to introduce. To compute the length of a list, use (len xs): <code>(len '(1 2 3 4))</code>.</p>
-</section>
-<section>
-<h2>Lesson 2. Functions</h2>
-<p>Now that you've got a basic understanding of some of the built-in functions of lisp, let's move on to defining new ones. The function you use to define new functions is <code>defun</code>:</p>
+<p>Try this: <code>(let ((xs (append '(1 2 3) '(4 5 6)))) (and (listp xs) (true-listp xs)))</code>
+</section></p>
+<p><section>
+In the previous example, I snuck in an extra simple function: <code>(and ...)</code>. It does what you'd expect from boolean algebra, and you can also use <code>(or ...)</code>, <code>(not ...)</code>, <code>(implies p q)</code>, etc.</p>
+<p>There's one final important built-in function that I'd like to introduce. To compute the length of a list, use (len xs): <code>(len '(1 2 3 4))</code>.
+</section></p>
+</article><article><h2>Lesson 2. Functions</h2>
+<p><section>
+Now that you've got a basic understanding of some of the built-in functions of lisp, let's move on to defining new ones. The function you use to define new functions is <code>defun</code>:</p>
 <pre><code>(defun name (param1 param2 ...) body)
 </code></pre>
-<p>Try adding this function that squares numbers: <code>(defun square (x) (* x x))</code>.</p>
-</section>
-<section>
-<h2>Lesson 2. Functions</h2>
-<p>An important thing happened here: in addition to just adding the new function, ACL2 did something interesting: it proved that no matter what input you give to your new function, it will, eventually, complete. It won't loop or call itself forever. Now, that's not too surprising, given how simple <code>(square ...)</code> is. But it can be quite a task for complex functions.</p>
-<p>Try out your new function now by squaring some of the types of numbers that ACL2 supports.</p>
-</section>
-<section>
-<h2>Lesson 2. Functions</h2>
-<p>Next, we're going to enter a recursive function; <code>factorial</code>. The factorial of a natural number is the product of the number and all the natural numbers below it. In other words, <code>(factorial n)</code> = <code>(* n (factorial (- n 1)))</code>. As a special case (called the "base case"), <code>(factorial 0)</code> = 1. A naive (but wrong) approach might be this:</p>
+<p>Try adding this function that squares numbers: <code>(defun square (x) (* x x))</code>.
+</section></p>
+<p><section>
+An important thing happened here: in addition to just adding the new function, ACL2 did something interesting: it proved that no matter what input you give to your new function, it will, eventually, complete. It won't loop or call itself forever. Now, that's not too surprising, given how simple <code>(square ...)</code> is. But it can be quite a task for complex functions.</p>
+<p>Try out your new function now by squaring some of the types of numbers that ACL2 supports.
+</section></p>
+<p><section>
+Next, we're going to enter a recursive function; <code>factorial</code>. The factorial of a natural number is the product of the number and all the natural numbers below it. In other words, <code>(factorial n)</code> = <code>(* n (factorial (- n 1)))</code>. As a special case (called the "base case"), <code>(factorial 0)</code> = 1. A naive (but wrong) approach might be this:</p>
 <pre><code>(defun factorial-wrong (n)
   (if (= n 0)
       1
@@ -137,9 +128,9 @@
       (* n (factorial (- n 1)))))
 </code></pre>
 </section>
-<section>
-<h2>Lesson 2. Functions</h2>
-<p>You'll notice that <code>(factorial (list 1 2 3))</code> returns <code>1</code>, an inapplicable answer. This is a little messy, but fine. Later, you can add <code>:guard</code>s to functions to ensure that users don't execute them on irrelevant values. (The prover, on the other hand, ignores guards, so it's best to do the same for now).</p>
+
+<p><section>
+You'll notice that <code>(factorial (list 1 2 3))</code> returns <code>1</code>, an inapplicable answer. This is a little messy, but fine. Later, you can add <code>:guard</code>s to functions to ensure that users don't execute them on irrelevant values. (The prover, on the other hand, ignores guards, so it's best to do the same for now).</p>
 <p>Now let's try defining a function on lists; <code>rev</code>, which reverses the list you give it. The base case for <code>rev</code> is the empty list, the reverse of which is just the empty list. For the general case, the reversed list is just the reversed "rest" of the list with the "first" element at the end, like so:</p>
 <pre><code>(defun rev (xs)
   (if (endp xs)
@@ -147,105 +138,103 @@
       (append (rev (rest xs)) (list (first xs)))))
 </code></pre>
 </section>
-<section>
-<h2>Lesson 3. Theorems</h2>
-<p>Of course, proving that functions terminate is only a small part of proving that they work. ACL2 also lets you prove arbitrary theorems about functions. We will start out using the <code>(thm ...)</code> function to do this. Try the following pretty obvious theorem: <code>(thm (= (+ a b) (+ b a)))</code></p>
-</section>
-<section>
-<h2>Lesson 3. Theorems</h2>
-<p>The proof for that theorem isn't very interesting. ACL2 just applies the built-in knowledge it has of linear arithmetic. How about a theorem about our previously-defined factorial function:</p>
+
+</article><article><h2>Lesson 3. Theorems</h2>
+<p><section>
+Of course, proving that functions terminate is only a small part of proving that they work. ACL2 also lets you prove arbitrary theorems about functions. We will start out using the <code>(thm ...)</code> function to do this. Try the following pretty obvious theorem: <code>(thm (= (+ a b) (+ b a)))</code>
+</section></p>
+<p><section>
+The proof for that theorem isn't very interesting. ACL2 just applies the built-in knowledge it has of linear arithmetic. How about a theorem about our previously-defined factorial function:</p>
 <pre><code>(thm (&gt; (factorial n) 0))
 </code></pre>
 </section>
-<section>
-<h2>Lesson 3. Theorems</h2>
-<p>Again, a relatively simple proof. For this one, ACL2 uses the fact that when it admitted <code>factorial</code>, it determined that the result was always a positive integer and stored that as a <code>:type-prescription</code> rule.</p>
+
+<p><section>
+Again, a relatively simple proof. For this one, ACL2 uses the fact that when it admitted <code>factorial</code>, it determined that the result was always a positive integer and stored that as a <code>:type-prescription</code> rule.</p>
 <p>Let's prove that the built in <code>append</code> function from earlier is associative; that is, <code>(append (append xs ys) zs)</code> equals <code>(append xs (append ys zs))</code>. Remember that to show that lists are equal, use <code>equal</code>, not <code>=</code>, which is just for numbers.</p>
 <pre><code>(thm (equal (append (append xs ys) zs) (append xs (append ys zs))))
 </code></pre>
 </section>
-<section>
-<h2>Lesson 3. Theorems</h2>
-<p>This is a long, (but interesting!) proof. If you're interested in the details, there's a good, relatively non-technical discussion of this proof by the authors of ACL2 <a href="http://www.cs.utexas.edu/~moore/acl2/current/The_Proof_of_the_Associativity_of_App.html">here</a>.</p>
+
+<p><section>
+This is a long, (but interesting!) proof. If you're interested in the details, there's a good, relatively non-technical discussion of this proof by the authors of ACL2 <a href="http://www.cs.utexas.edu/~moore/acl2/current/The_Proof_of_the_Associativity_of_App.html">here</a>.</p>
 <p>For theorems that ACL2 can't prove on its own, you'll often have to provide lemmas; theorems that are added to the ACL2 logical world and can then be used in proving future theorems. To add a theorem to the logical world, use <code>(defthm ...)</code> and give it a name.</p>
 <pre><code>(defthm append-associative
   (equal (append (append xs ys) zs)
          (append xs (append ys zs))))
 </code></pre>
 </section>
-<section>
-<h2>Lesson 3. Theorems</h2>
-<p>Theorems added using this method
-must be written with care; the prover blindly replaces the left side with the right side whenever it finds something that looks like the left side and can prove all of the <code>implies</code> hypotheses. If we admitted a different version of append-associative that converted <code>(append xs (append ys zs))</code> to <code>(append (append xs ys))</code>, the theorem prover would loop forever, applying these two rules repeatedly.</p>
+
+<p><section>
+Theorems added using this method must be written with care; the prover blindly
+replaces the left side with the right side whenever it finds something that
+looks like the left side and can prove all of the <code>implies</code> hypotheses. If we
+admitted a different version of append-associative that converted <code>(append xs
+(append ys zs))</code> to <code>(append (append xs ys))</code>, the theorem prover would loop
+forever, applying these two rules repeatedly.</p>
 <p>A final easy theorem before we move on to more difficult theorems is that reversing a list twice yields the original list.</p>
 <p>The proof of this one is also interesting. In proving rev-rev, the prover identifies the need for a simpler lemma, namely, that <code>(rev (append xs (list x)))</code> equals <code>(cons x (rev xs))</code>, and proves it using a second induction.</p>
 <pre><code>(defthm rev-rev
   (implies (true-listp xs)
            (equal (rev (rev xs)) xs)))
 </code></pre>
-</section>
+<p></section>
 <section>
-<h2>This tutorial is a work in progress</h2>
-<p>Feel free to email any comments you have to me at calebegg@gmail.com, and come back for more later.</p>
-<!--
-Lesson 4. Harder theorems
--------------------------
-  (defun exp (b n) ...)
-Define an expoential function, `(exp ...)`. `(exp b n)` is b^n.
+This tutorial is a work in progress</p>
+<hr />
+<p>Feel free to email any comments you have to me at calebegg@gmail.com, and come back for more later.
+</section>
+<!--</p>
+</article><article><h2>Lesson 4. Harder theorems</h2>
+<section>
 
-`(exp b 0)` is 1 and `(exp b n)` is `b` times `(exp b (- n 1))`.
+<p>(defun exp (b n) ...)
+Define an expoential function, <code>(exp ...)</code>. <code>(exp b n)</code> is b^n.</p>
+<p><code>(exp b 0)</code> is 1 and <code>(exp b n)</code> is <code>b</code> times <code>(exp b (- n 1))</code>. </p>
+<p>(defun rp (b n) ...)
+A faster exponential algorithm is called the Russian Peasant algorithm. It works like this: If <code>n</code> is zero, return 1 as before. Otherwise, if <code>n</code> even, return <code>(exp (square b) (/ n 2))</code>. If <code>n</code> is odd, multiply <code>b</code> by <code>(exp (square b) k)</code> where <code>k</code> is the whole number part of <code>(/ n 2)</code> which can be computed using <code>(floor n 2)</code>. Call the new function <code>(rp b n)</code>.</p>
+<p>(defthm rp-equals-exp ...)
+You could test out <code>(rp ...)</code> for several values to demonstrate that it returns the same result, but instead let's prove that they always return the same result.</p>
+<pre><code>(defthm rp=exp
+  (= (rp b n) (exp b n)))
+</code></pre>
+</section>
 
-(defun rp (b n) ...)
-A faster exponential algorithm is called the Russian Peasant algorithm. It works like this: If `n` is zero, return 1 as before. Otherwise, if `n` even, return `(exp (square b) (/ n 2))`. If `n` is odd, multiply `b` by `(exp (square b) k)` where `k` is the whole number part of `(/ n 2)` which can be computed using `(floor n 2)`. Call the new function `(rp b n)`.
-
-(defthm rp-equals-exp ...)
-You could test out `(rp ...)` for several values to demonstrate that it returns the same result, but instead let's prove that they always return the same result.
-
-(defthm rp=exp
-      (= (rp b n) (exp b n)))
-
-(defun orderedp (xs) ...)
+<p>(defun orderedp (xs) ...)
   (defun partial-sums (xs running) ...)
-  (defthm partial-sums-ordered (orderedp (partial-sums xs 0)))
-Lesson 5. Tail recursion
-------------------------
-  (defun fact-tail (n r) ...)
+  (defthm partial-sums-ordered (orderedp (partial-sums xs 0)))</p>
+</article><article><h2>Lesson 5. Tail recursion</h2>
+<p>(defun fact-tail (n r) ...)
   (defun sum (xs) ...)
   (defthm sum-over-append ...)
   (defun running-sum (xs r) ...)
-  (defthm sum=rumming-sum ...)
-Lesson 6. Sorting
------------------
-  (defun insert (x xs) ...)
+  (defthm sum=rumming-sum ...)</p>
+</article><article><h2>Lesson 6. Sorting</h2>
+<p>(defun insert (x xs) ...)
   (defthm (implies (orderedp xs)) (orderedp (insert x xs)))
   (defun isort (xs) ...)
   (defthm (orderedp (isort xs)))
   (defun split (xs) ...)
-For merge sort, we need a way to split a list in half. With arrays, we would divide the length in half, but linked lists, that would be a slow operation. Instead, we'll split the list in half by dividing it up into two lists, two elements at a time.
-
-(defun split (xs)
-      (if (endp (rest xs))
-          xs
-          (cons (first xs)
-                (cons (second xs)
-                      (rest (rest xs))))))
-
-(defthm split-halves-list ...)
+For merge sort, we need a way to split a list in half. With arrays, we would divide the length in half, but linked lists, that would be a slow operation. Instead, we'll split the list in half by dividing it up into two lists, two elements at a time.</p>
+<pre><code>(defun split (xs)
+  (if (endp (rest xs))
+      xs
+      (cons (first xs)
+            (cons (second xs)
+                  (rest (rest xs))))))
+</code></pre>
+<p>(defthm split-halves-list ...)
   (defun merge (xs ys) ...)
-Merge sort depends on the linear-time merge algorithm, which takes two sorted lists and merges them into a list that's also sorted. The algorithm works like this: (a) `(merge xs nil)` is xs, and `(merge nil ys)` is ys. (b) `(merge (cons x xs) (cons y ys))` is `(cons x (cons y (merge xs ys)))` if x is less than y, and `(cons y (cons x (merge xs ys)))` otherwise.
-
-One other thing you need to know before writing `merge` is that ACL2 will need a little help understanding this more complex recursion. ACL2 proves that functions terminate using a `:measure`. The simplest form of `:measure` is a natural number. The `:measure` must be a quantity that decreases with each recursive call. In this case, you can use `(+ (len xs) (len ys))`.
-
-Write an algorithm for merge.
-
-(defthm (implies (and (orderedp xs) (orderedp ys)) (orderedp (merge xs ys))))
-  Qsort
-Lesson 7. I/O
--------------
---></section>
+Merge sort depends on the linear-time merge algorithm, which takes two sorted lists and merges them into a list that's also sorted. The algorithm works like this: (a) <code>(merge xs nil)</code> is xs, and <code>(merge nil ys)</code> is ys. (b) <code>(merge (cons x xs) (cons y ys))</code> is <code>(cons x (cons y (merge xs ys)))</code> if x is less than y, and <code>(cons y (cons x (merge xs ys)))</code> otherwise.</p>
+<p>One other thing you need to know before writing <code>merge</code> is that ACL2 will need a little help understanding this more complex recursion. ACL2 proves that functions terminate using a <code>:measure</code>. The simplest form of <code>:measure</code> is a natural number. The <code>:measure</code> must be a quantity that decreases with each recursive call. In this case, you can use <code>(+ (len xs) (len ys))</code>.</p>
+<p>Write an algorithm for merge.</p>
+<p>(defthm (implies (and (orderedp xs) (orderedp ys)) (orderedp (merge xs ys))))
+  Qsort</p>
+</article><article><h2>Lesson 7. I/O</h2>
+<p>--></p></article>
 <input type="button" id="prev" value="&lt;" />
 <input type="button" id="next" value="&gt;" />
-</article>
+</div>
 <aside>
   <p> <a href="http://www.cs.utexas.edu/~moore/acl2/">ACL2</a> is: <strong>A</strong> <strong>Computational</strong>
 <strong>Logic</strong>: A complex mechanized theorem prover that can reason

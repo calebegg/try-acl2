@@ -60,7 +60,7 @@ body {
   width: 1150px;
   margin: 10px auto;
 }
-#console, article, aside {
+#console, #tutorial, aside {
   border-radius: 3px;
   padding: 5px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, .2);
@@ -104,7 +104,7 @@ code {
   word-wrap: break-word;
   cursor: pointer;
 }
-article {
+#tutorial {
   position: absolute;
   left: 0;
   top: 20px;
@@ -113,6 +113,9 @@ article {
   padding-bottom: 40px !important; /* prev/next */
   background: #C9E29F;
   min-height: 400px;
+}
+article, section {
+  display: none;
 }
 aside {
   background: #94C740;
@@ -223,7 +226,7 @@ section {
   #console {
     height: 200px;
   }
-  #console, aside, article {
+  #console, aside, #tutorial {
     position: relative !important;
     top: 0;
     left: 0;
