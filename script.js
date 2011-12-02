@@ -54,7 +54,6 @@ function main() {
   info = $('aside');
   articles = $('#tutorial article');
   sections = $('#tutorial article section');
-  throbber = $('#throbber');
   on_resize();
   // Set up tutorial
   articles.eq(0).show();
@@ -102,7 +101,7 @@ function main() {
           report([{msg:"Unmatched ')'", className:"error"}]);
           return;
         }
-        throbber.show();
+        show_throbber();
         controller.continuedPrompt = false;
         $.get('', {code: line, sid: sid}, function(data) {
           data = data.trim();
@@ -126,7 +125,7 @@ function main() {
             report(data);
           }
           jq_console.css('opacity', '1');
-          throbber.hide();
+          hide_throbber();
           outer_console_elem = outer_console[0];
           outer_console_elem.scrollTop = outer_console_elem.scrollHeight;
         });
@@ -138,6 +137,12 @@ function main() {
       controller.inner.click();
     });
   });
+}
+function show_throbber() {
+  jq_console.css('background', 'url("/throbber.gif") no-repeat center bottom');
+}
+function hide_throbber() {
+  jq_console.css('background', '');
 }
 $(main);
 function parens_match(line) {
