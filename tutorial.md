@@ -17,7 +17,7 @@ The addition function is called `+`. Try adding two numbers now: `(+ 1 2)`
 <section>
 You can use the single quote mark as a type of shorthand for creating lists. Unlike with `(list ...)`, the single quote marker also "quotes" the items inside of it. While `(list 1 2 (+ 1 2))` would be the same as `(list 1 2 3)`, `'(1 2 (+ 1 2))` is the same as `(list 1 2 (list '+ 1 2))`.
 
-The single quoted + sign, `'+` is called a "symbol". You can use the single quote to create a symbol out of any simple sequence of characters, such as `'not-found`, `'valid`, or `'1+1`.
+The single quoted + sign, `'+` is called a "symbol". You can use the single quote to create symbols out of sequences of characters, such as `'not-found`, `'valid`, or `'rule-33`.
 
 `append` concatenates two (or more) lists together. Try: `(append '(1 2 3) '(4 5 6))`
 </section>
@@ -34,13 +34,13 @@ Try it now with one of the simple boolean values: `(if t "True" "False")`
 </section>
 
 <section>
-Of course, `(if ...)` doesn't do much good in this form. You'll almost always call (if ...) with a function call for the second parameter. Some functions that return boolean values:
+Of course, `(if ...)` doesn't do much good here; you already know that t is true. You'll almost always call (if ...) with a function call for the second parameter. Here are some functions that return boolean values:
 
     (< a b) (> a b) (<= a b) (>= a b) (= a b) (/= a b)
 These are the six equality and inequality tests. They should be familiar to you. The final one is 'not equal'; the slash is meant to signify the crossed out equal sign of mathematics.
 
     (integerp x) (rationalp x) (acl2-numberp x) (complex-rationalp x) (natp x) 
-These functions recognize (return `t`) some of the different types of numbers available in ACL2. The terminal '`p`' is a common idiom from Lisp and means "predicate". You can imagine it as a sort of question mark; `(natp i)` means "Is `i` an natural number?".
+These functions 'recognize' some of the different types of numbers available in ACL2 (that is, they return `t` when their argument is of the requested type; `(integerp x)` returns `t` if `x` is an integer). The terminal '`p`' is a common idiom from Lisp and means "predicate". You can imagine it as a sort of question mark; `(natp i)` means "Is `i` an natural number?".
 
 Try this: `(if (= (+ 1 3) (+ 5 2 -3)) "Equal" "Not equal")`
 </section>
@@ -48,7 +48,7 @@ Try this: `(if (= (+ 1 3) (+ 5 2 -3)) "Equal" "Not equal")`
 <section>
 
     (endp xs) (listp xs) (true-listp xs) (equal xs ys)
-These functions relate to lists. `(endp xs)` checks to see if `xs` is an empty list (if we are "at the end" of the list, a phrasing that makes sense if you think about these functions as they are used recursively). `(listp xs)` is a recognizer for lists. `(true-listp xs)` is a stronger recognizer for lists that checks to see if the marker used for the empty list is `nil`, as it is in the system-created lists. Most ACL2 functions require (or only work with) "true" lists, like the ones you can construct with `(list ...)`. `(equal ...)` tests the equality of lists (or more simple elements). `(= ...)` only works for numbers.
+These functions relate to lists. `(endp xs)` checks to see if `xs` is an empty list (if we are "at the end" of the list, a phrasing that makes sense if you think about these functions as they are used recursively). `(listp xs)` is a recognizer for lists. `(true-listp xs)` is a stronger recognizer for lists that checks to see if the marker used for the empty list is `nil`, as it is in the system-created lists. Most ACL2 functions are intended to work with "true" lists, like the ones you can construct with `(list ...)`. `(equal ...)` tests the equality of lists (or more simple elements). `(= ...)` is intended for numbers.
 
 As a side note, I often use `xs` (or `ys`, `zs`, etc), pronounced like English plurals ("exes", "whys", "zees"), for lists and `x`, `y`, etc. for numbers or simple values. This is just a convention, not a part of Lisp.
 
@@ -63,13 +63,13 @@ Instead, to produce meaningful or complex programs, you'll need to modify and re
 Lets start with aliases. They are a good way to "save" the results of a complex computation and use it more than once, so you don't have to redo expensive operations. Aliasing is done with the `let` function.
 
     (let ((alias1 value1) (alias2 value2) ...) body)
-where the aliases are symbols (made up of letters, numbers, and/or some symbols) and the values are either literal values, or, more often, function calls.
+where the aliases are symbols, just like before (but without the ') and the values are either literal values, or, more often, function calls.
 
 Try this: `(let ((xs (append '(1 2 3) '(4 5 6)))) (and (listp xs) (true-listp xs)))`
 </section>
 
 <section>
-In the previous example, I snuck in an extra simple function: `(and ...)`. It does what you'd expect from boolean algebra, and you can also use `(or ...)`, `(not ...)`, `(implies p q)`, etc.
+In the previous example, I snuck in an extra simple operator: `(and ...)`. It does what you'd expect from boolean algebra, and you can also use `(or ...)`, `(not ...)`, `(implies p q)`, etc.
 
 There's one final important built-in function that I'd like to introduce. To compute the length of a list, use (len xs): `(len '(1 2 3 4))`.
 </section>
@@ -116,14 +116,15 @@ When defining functions like `factorial` that recurse "towards" 0 and where you 
 </section>
 
 <section>
-You'll notice that `(factorial (list 1 2 3))` returns `1`, an inapplicable answer. This is a little messy, but fine. Later, you can add `:guard`s to functions to ensure that users don't execute them on irrelevant values. (The prover, on the other hand, ignores guards, so it's best to do the same for now).
+You'll notice that `(factorial (list 1 2 3))` returns `1`, an inapplicable answer. This is a little messy, but fine. ACL2 is type-free, so it has to give an answer for any arguments. One approach (not covered here) to making this easier to use is to add `:guard`s to functions and turn on guard checking to ensure that users don't execute your functions on irrelevant values. (The prover, on the other hand, ignores guards, so it's best to do the same for now).
 
 Now let's try defining a function on lists; `rev`, which reverses the list you give it. The base case for `rev` is the empty list, the reverse of which is just the empty list. For the general case, the reversed list is just the reversed "rest" of the list with the "first" element at the end, like so:
 
     (defun rev (xs)
       (if (endp xs)
           nil
-          (append (rev (rest xs)) (list (first xs)))))
+          (append (rev (rest xs))
+                  (list (first xs)))))
 </section>
 
 Lesson 3. Theorems
@@ -139,11 +140,13 @@ The proof for that theorem isn't very interesting. ACL2 just applies the built-i
 </section>
 
 <section>
-Again, a relatively simple proof. For this one, ACL2 uses the fact that when it admitted `factorial`, it determined that the result was always a positive integer and stored that as a `:type-prescription` rule.
+Again, a relatively simple proof. For this one, ACL2 uses the fact that when it admitted `factorial`, it determined that the result was always a positive integer and stored that as a as a special kind of rule known as a :type-prescription rule. (ACL2 supports numerous kinds of rules, but we need not go into that
+here.)
 
-Let's prove that the built in `append` function from earlier is associative; that is, `(append (append xs ys) zs)` equals `(append xs (append ys zs))`. Remember that to show that lists are equal, use `equal`, not `=`, which is just for numbers.
+Let's prove that the built in `append` function from earlier is associative; that is, `(append (append xs ys) zs)` equals `(append xs (append ys zs))`.
 
-    (thm (equal (append (append xs ys) zs) (append xs (append ys zs))))
+    (thm (equal (append (append xs ys) zs)
+                (append xs (append ys zs))))
 </section>
 
 <section>
