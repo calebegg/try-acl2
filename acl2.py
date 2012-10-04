@@ -26,6 +26,7 @@ def check_none_in_blacklist(code, top_level=True):
   defun-nx make-event memoize profile redo-flat set-body unmemoize include-book
   break-on-error close-trace-file open-trace-file trace! trace$ wet untrace$
   install-new-raw-prompt program :program mini-proveall #. #| |# #, defmacro
+  state defmacro-fn intern intern$
   '''.split()
   for term in code:
     if isinstance(term, list):
